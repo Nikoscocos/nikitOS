@@ -1,0 +1,48 @@
+{
+    "applications": [
+        {"name": "Welcome application", "icon": "apps/welcome/icon.png", "path": "apps/welcome"},
+        {"name": "Calculator", "icon": "apps/calculator/icon.png", "path": "apps/calculator"},
+        {"name": "Process manager", "icon": "apps/processmanager/icon.png", "path": "apps/processmanager"},
+        {"name": "Minecraft 1.5.2", "icon": "apps/minecraft/icon.png", "path": "apps/minecraft"},
+        {"name": "Quake 3", "icon": "apps/quake3/icon.png", "path": "apps/quake3"},
+        {"name": "Python 3.10.7", "icon": "apps/python3/icon.png", "path": "apps/python3"}
+    ],
+    "vmem": {
+        "windows": [],
+        "svcache": {},
+        "clickcycles": 0,
+        "windowcounts": 0,
+        "windowindexes": 0,
+        "taskbar": false,
+        "activewindow": false,
+        "wallpaper": "system/ico/wall.png",
+        "glct": "display0",
+        "glts": "taskmenu"
+    },
+    "fileformats": [
+        {"ext": "", "name": "File", "openwith": ["com.textedit"]},
+        {"ext": ".wapp/.wp/.webapp", "name": "Web-Application", "openwith": ["com.wappmng", "com.textedit"]},
+        {"ext": ".jpg/.jpeg/.png/.webp", "name": "Image file", "openwith": ["com.imageview"]},
+        {"ext": ".mp3/.ogg/.wav", "name": "Audio file", "openwith": ["com.music"]},
+        {"ext": ".mp4/.mkv/.3gp/.webm/.vid/.mov", "name": "Video file", "openwith": ["com.videoview"]},
+        {"ext": ".js", "name": "JavaScript code", "openwith": ["dmn.jsrun", "com.textedit"]},
+        {"ext": ".text/.txt/.log/.cfg", "name": "Text file", "openwith": ["com.textedit"]},
+        {"ext": ".app/.nikitos/.exe/.bin/", "name": "Native application", "openwith": ["dmn.apprun"]},
+        {"ext": ".html/.htm/.htmk/.web/.webview", "name": "Web-page file", "openwith": ["com.webview", "com.textedit"]},
+        {"ext": ".pyjs/.pyva", "name": "JavaScript + Python file", "openwith": ["dmn.pyva", "com.textedit"]},
+        {"ext": ".swf/.flashplayer", "name": "Flash Player file", "openwith": ["com.flashplayer"]},
+        {"ext": ".nes/.nesemu", "name": "NES ROM-file", "openwith": ["com.nesjs"]},
+        {"ext": ".vm/.webvm", "name": "Virtual Machine file", "openwith": ["com.webvm"]},
+        {"ext": "folder", "name": "Folder", "openwith": ["com.files"]},
+        {"ext": "*", "name": "Unkown format file", "openwith": ["com.textedit"]}
+    ],
+    "weekdays": {
+        "1": "Monday",
+        "2": "Tuesday",
+        "3": "Wednesday",
+        "4": "Thursday",
+        "5": "Friday",
+        "6": "Saturday",
+        "7": "Sunday"
+    }
+}

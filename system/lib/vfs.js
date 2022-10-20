@@ -13,14 +13,3 @@ function getOpenWith(ext) {
     try { return getFF(ext)['openwith']; }
     catch { return vfs.fileformats.find(o => o.ext === '*')['openwith']; }
 }
-function saveKey(key, value, toeval=null) {
-    fetch('/savekey', {
-        method: 'POST',
-        headers: {
-            'Accept': 'application/json, text/plain, */*',
-            'Content-Type': 'application/json'
-        },
-        body: JSON.stringify({"key": key, "value": value})
-    })
-    .then(res => { if (toeval) { eval(toeval); } })
-}

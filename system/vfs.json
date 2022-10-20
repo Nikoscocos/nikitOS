@@ -4,7 +4,6 @@
         {"name": "Calculator", "icon": "apps/calculator/icon.png", "path": "apps/calculator"},
         {"name": "Process manager", "icon": "apps/processmanager/icon.png", "path": "apps/processmanager"},
         {"name": "Minecraft 1.5.2", "icon": "apps/minecraft/icon.png", "path": "apps/minecraft"},
-        {"name": "Quake 3", "icon": "apps/quake3/icon.png", "path": "apps/quake3"},
         {"name": "Python 3.10.7", "icon": "apps/python3/icon.png", "path": "apps/python3"}
     ],
     "vmem": {

@@ -204,9 +204,9 @@ body {
 .openedapp {
     display: inline-block;
     font-size: 13.5px;
-    line-height: 16px;
+    line-height: 17px;
     color: white;
-    padding: 9px 15px 5px 15px;
+    padding: 9px 15px 5px 14px;
     height: 100%;
     background-color: transparent;
     transition: 0.1s;
@@ -223,7 +223,7 @@ body {
 .openedapp img {
     width: 16px;
     margin-right: 8px;
-    margin-top: -3px;
+    margin-top: 0px;
     border-radius: 2px;
 }
 .openedapp p {

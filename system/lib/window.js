@@ -23,12 +23,11 @@ function startApp(package, params = {}) {
                 let windowid = `window${vfs.vmem.windows.length + 1}`;
                 let windowcount = vfs.vmem.windows.length + 1;
                 var spawnY = 0, spawnX = 0;
-                var winmaxim = '', winminim = '', winclose = '', winfocus = '', windbclick = '', styles = '', headermax = '', constyles = '';
+                var winmaxim = '', winminim = '', winclose = '', windbclick = '', styles = '', headermax = '', constyles = '';
                 var spawnY = '85px', spawnX = '50px';
                 if (res['access']['canclose']) { winclose = 'show'; }
                 if (res['access']['canminim']) { winminim = 'show'; }
                 if (res['access']['canmaxim']) { winmaxim = 'show'; }
-                if (res['access']['canfocus']) { winfocus = 'show'; }
                 let div = document.createElement('div');
                 div.setAttribute('id', vfs.vmem.windowcounts);
                 div.setAttribute('class', 'window');
@@ -47,7 +46,6 @@ function startApp(package, params = {}) {
                     <div class="header"${headermax} id="header${vfs.vmem.windowcounts}"${styles}>
                         <div class="title" id="title${vfs.vmem.windowcounts}">${res['title']}</div>
                         <div class="buttons" id="buttons${vfs.vmem.windowcounts}">
-                            <div focus onclick="doWithWindow('${String(vfs.vmem.windowcounts)}', 'focus')" ${winfocus}></div>
                             <div minim onclick="doWithWindow('${String(vfs.vmem.windowcounts)}', 'minimize')" ${winminim}></div>
                             <div maxim onclick="doWithWindow('${String(vfs.vmem.windowcounts)}', 'maximize')" ${winmaxim}></div>
                             <div close onclick="doWithWindow('${String(vfs.vmem.windowcounts)}', 'close')" ${winclose}></div>
@@ -82,6 +80,7 @@ function startApp(package, params = {}) {
                     "canclose": res['access']['canclose'],
                     "canminim": res['access']['canminim'],
                     "canmaxim": res['access']['canmaxim'],
+                    "canfocus": res['access']['canfocus'],
                     "onclose": res['onclose'],
                     "hash": (Math.random() + 1).toString(36).substring(2)
                 };
@@ -498,7 +497,11 @@ function doWithWindow(windowid, action) {
         }
         catch {}
         getWindowById(realid)['active'] = true;
-        if (hasdyn) { hasdyn.focus(); }
+        console.log(windowconf)
+        if (hasdyn && windowconf['canfocus']) {
+            try { setTimeout(() => { hasdyn.focus(); }, 500);}
+            catch {}
+        }
     }
     if (action == 'desktopclick') {
         for (let i = 0; i < vfs.vmem.windows.length; i += 1) {

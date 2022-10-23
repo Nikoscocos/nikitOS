@@ -86,6 +86,9 @@ POSY     ${thc.posY}`
             case 'sh':
                 tScript(ftr);
                 break;
+            case 'eval':
+                eval(ftr);
+                break;
             default:
                 alias = tGetAlias(cmd);
                 if (alias) { ans = tCommand(alias, hash, winid); }

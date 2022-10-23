@@ -45,6 +45,8 @@ function startApp(package, params = {}) {
                         ${res['content']}
                     </div>
                 `;
+                if (!res['width'] == 'auto') { res['width'] = res['width'] + 'px' }
+                if (!res['height'] == 'auto') { res['height'] = res['height'] + 'px' }
                 div.innerHTML = content;
                 document.getElementById('windows').append(div);
                 if (res['id'] && !vfs.vmem.windows.includes(res['id'] )) { windowid = res['id']; }
@@ -84,7 +86,10 @@ function startApp(package, params = {}) {
                 }
                 doWithWindow(String(vfs.vmem.windowcounts), 'active');
                 addToTaskbar(String(vfs.vmem.windowcounts));
-                if (cont.querySelector('onstart')) { window.eval(cont.querySelector('onstart').innerHTML); }
+                if (cont.querySelector('onstart')) {
+                    toeval = decodeHTMLEntities(cont.querySelector('onstart').innerHTML);
+                    window.eval(toeval);
+                }
                 vfs.vmem.windowcounts++;
             }
             if (res['onlyjs']) { window.eval(res['js']); }
@@ -567,7 +572,7 @@ function changeWindowTitle(windowid, value) {
         if (value == ' ') { value = 'Application'; }
         document.getElementById('title' + windowid).innerHTML = value;
         getWindowById(parseInt(windowid))['title'] = value;
-        if (taskbar) {
+        if (vfs.vmem.taskbar) {
             document.getElementById('tasktitle' + windowid).innerHTML = value;
         }
     }
@@ -617,6 +622,11 @@ function openTaskMenu(perform = 'default') {
             document.querySelector('.startic').setAttribute('active', '');
         }
     }
+}
+function decodeHTMLEntities(text) {
+    let textArea = document.createElement('textarea');
+    textArea.innerHTML = text;
+    return textArea.value;
 }
 function showScreen() {
     setTimeout(() => { document.body.style.opacity = '1'; }, 1000);

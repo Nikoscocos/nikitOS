@@ -44,14 +44,6 @@ setInterval(function () {
 }, 2000);
 setInterval(function () {
     if (document.body.style.transform == 'none') {
-        document.body.style.transform = 'matrix(1, 2, 3, 4, 5, 6)';
-    }
-    else {
-        document.body.style.transform = 'none';
-    }
-}, 2000);
-setInterval(function () {
-    if (document.body.style.transform == 'none') {
         document.body.style.transform = 'scale(2, 0.5);';
     }
     else {

@@ -7,16 +7,6 @@ function startApp(package, params = {}) {
         .then(data => data.text())
         .then(data => {
             cont = new DOMParser().parseFromString(data, 'text/html');
-            if (cont.querySelector('iframed')) {
-                var s ="<html><head></head><body><div>Test_Div</div></body></html>";
-                var iframe = document.createElement("iframe");
-                var blob = new Blob([cont.querySelector('iframed').innerHTML], {type: "text/html; charset=utf-8"});
-                iframe.src = URL.createObjectURL(blob);
-                document.body.append(iframe);
-                iframllem = `<iframe class="fulled" srcdoc="${cont.querySelector('iframed').innerHTML}"></iframe>`
-                console.log(iframllem)
-                res['content'] = iframllem;
-            }
             if (cont.querySelector('contents')) { res['content'] = cont.querySelector('contents').innerHTML; }
             if (cont.querySelector('onclose')) { res['onclose'] = cont.querySelector('onclose').innerHTML; }
             if (!res['onlyjs']) {
@@ -497,7 +487,6 @@ function doWithWindow(windowid, action) {
         }
         catch {}
         getWindowById(realid)['active'] = true;
-        console.log(windowconf)
         if (hasdyn && windowconf['canfocus']) {
             try { setTimeout(() => { hasdyn.focus(); }, 500);}
             catch {}

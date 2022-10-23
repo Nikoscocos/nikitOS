@@ -20,7 +20,8 @@ function screenInit() {
         date = getDate();
         document.getElementById('dateplace').innerHTML = `${date['hours']}:${date['minutes']}:${date['seconds']}`;
     }, 1000);
-    setWallpaper(vfs.vmem.wallpaper);
+    if (localStorage.wallpaper) { setWallpaper(localStorage.wallpaper); }
+    else { setWallpaper(vfs.vmem.wallpaper); }
     setApps();
     showScreen();
 }

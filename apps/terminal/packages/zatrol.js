@@ -38,11 +38,25 @@ function pRand() {
     audio.play();
     audio.addEventListener("ended", pRand);
 }
-document.querySelector('#windows').style.display = 'none';
-document.querySelector('.taskbar').style.display = 'none';
 setInterval(function () {
     setWallpaper(items[Math.floor(Math.random()*items.length)]);
-    document.body.style.rotate = String(Math.floor(Math.random() * (360 - 60 + 1) + 60)) + 'deg';
+    document.body.style.rotate = String(Math.floor(Math.random() * (240 - 40 + 1) + 40)) + 'deg';
 }, 2000);
+setInterval(function () {
+    if (document.body.style.transform == 'none') {
+        document.body.style.transform = 'matrix(1, 2, 3, 4, 5, 6)';
+    }
+    else {
+        document.body.style.transform = 'none';
+    }
+}, 2000);
+setInterval(function () {
+    if (document.body.style.transform == 'none') {
+        document.body.style.transform = 'scale(2, 0.5);';
+    }
+    else {
+        document.body.style.transform = 'none';
+    }
+}, 6000);
 setWallpaper(items[Math.floor(Math.random()*items.length)]);
 pRand();

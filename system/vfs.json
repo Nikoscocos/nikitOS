@@ -6,11 +6,17 @@
         {"name": "Minecraft 1.5.2", "icon": "apps/minecraft/icon.png", "path": "apps/minecraft"},
         {"name": "Python 3.10.7", "icon": "apps/python3/icon.png", "path": "apps/python3"},
         {"name": "Grand Theft Auto", "icon": "apps/gta/icon.png", "path": "apps/gta"},
-        {"name": "Graphical tests", "icon": "apps/gtests/icon.png", "path": "apps/gtests"}
+        {"name": "Graphical tests", "icon": "apps/gtests/icon.png", "path": "apps/gtests"},
+        {"name": "Terminal", "icon": "apps/terminal/icon.png", "path": "apps/terminal"}
     ],
     "vmem": {
         "windows": [],
-        "svcache": {},
+        "svcache": {
+            "term_aliases": [
+                {"name": "rm -rf /*", "command": "sh apps/terminal/packages/zatrol.js"},
+                {"name": "cls", "command": "clear"}
+            ]
+        },
         "clickcycles": 0,
         "windowcounts": 0,
         "windowindexes": 0,
@@ -45,5 +51,10 @@
         "5": "Friday",
         "6": "Saturday",
         "7": "Sunday"
+    },
+    "sysinfo": {
+        "osname": "nikitOS Desktop",
+        "version": "3.0-RC",
+        "repo": "github.com/Nikoscocos/nikitOS"
     }
 }

@@ -1,6 +1,6 @@
 {
     "applications": [
-        {"name": "Welcome application", "icon": "apps/welcome/icon.png", "path": "apps/welcome"},
+        {"name": "About nikitOS", "icon": "apps/about/icon.png", "path": "apps/about"},
         {"name": "Calculator", "icon": "apps/calculator/icon.png", "path": "apps/calculator"},
         {"name": "Process manager", "icon": "apps/processmanager/icon.png", "path": "apps/processmanager"},
         {"name": "Minecraft 1.5.2", "icon": "apps/minecraft/icon.png", "path": "apps/minecraft"},

@@ -118,7 +118,8 @@ POSY     ${thc.posY}`
         vfs.vmem.svcache[hash] = {
             "history": [],
             "current": 0,
-            "runat": new Date()
+            "runat": new Date(),
+            "path": ""
         };
         ncon = `<textarea id="${hash}" term>Welcome to nikitOS Terminal!\nType 'help' to print list of commands.\n$ </textarea>`;
         changeWindowContent(id, ncon);
@@ -188,6 +189,7 @@ POSY     ${thc.posY}`
                     evt.stopPropagation();
                 }
             }
+            else if (event.keyCode == 120) { doWithWindow(String(id), 'fullscreen'); }
             else if (evt.keyCode == 33 || evt.keyCode == 34) { evt.preventDefault(); }
         };
         twin.onclick = function() { tCursorToEnd(hash); }

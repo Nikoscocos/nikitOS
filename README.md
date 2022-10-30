@@ -7,6 +7,6 @@ Found an error or bug?<br>Throw it in issues!
 
 Let's develop this web operating system together!
 
-# Screenshoot
+# Screenshot
 ![image](https://user-images.githubusercontent.com/77122703/197037594-0f8b2740-d979-409b-b728-06897ab5f625.png)
 <p align="center">nikitOS running Minecraft 1.5.2, GTA 1 and standart apps.</p>

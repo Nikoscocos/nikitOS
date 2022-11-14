@@ -74,7 +74,8 @@ function startApp(package, params = {}) {
                     "canmaxim": res['access']['canmaxim'],
                     "canfocus": res['access']['canfocus'],
                     "onclose": res['onclose'],
-                    "hash": (Math.random() + 1).toString(36).substring(2)
+                    "hash": (Math.random() + 1).toString(36).substring(2),
+                    "intouch": false
                 };
                 vfs.vmem.windows.push(wininfo);
                 draggableWindow(String(vfs.vmem.windowcounts));
@@ -99,11 +100,52 @@ function startApp(package, params = {}) {
 function draggableWindow(windowid) {
     var pos1 = 0, pos2 = 0, pos3 = 0, pos4 = 0;
     let elmnt = document.getElementById(windowid);
+    var startX=0, startY=0;
+
     try {
         let header = document.getElementById('header' + elmnt.id);
         if (header) { header.onmousedown = mouseHeaderDown; }
     }
     catch {}
+
+    elmnt.addEventListener('touchstart',function(e) {
+        startX = e.changedTouches[0].pageX;
+        startY = e.changedTouches[0].pageY;
+    });
+
+    elmnt.addEventListener('touchmove',function(e) {
+        e.preventDefault();
+        var deltaX = e.changedTouches[0].pageX - startX;
+        var deltaY = e.changedTouches[0].pageY - startY;
+        elmnt.style.left = elmnt.offsetLeft + deltaX + 'px';
+        elmnt.style.top = elmnt.offsetTop + deltaY + 'px';
+
+        startX = e.changedTouches[0].pageX;
+        startY = e.changedTouches[0].pageY;
+    });
+
+    let doubleClick = function () {
+        console.log('double click')
+    }
+    
+    wconf = getWindowById(parseInt(elmnt.id))
+
+    let doubleTouch = function (e) {
+        if (e.touches.length === 1) {
+            if (!wconf.intouch) {
+                wconf.intouch = e.timeStamp + 400
+            }
+            else if (e.timeStamp <= wconf.intouch) {
+                e.preventDefault()
+                doWithWindow(elmnt.id, 'maximize')
+                wconf.intouch = null
+            }
+            else {
+                wconf.intouch = e.timeStamp + 400
+            }
+        }
+    }
+    elmnt.addEventListener('touchstart', doubleTouch)
     function mouseHeaderDown(e) {
         if (!getWindowById(parseInt(windowid))['maximized']) {
             e = e || window.event;
@@ -454,6 +496,7 @@ function doWithWindow(windowid, action) {
         }
     }
     if (action == 'active') {
+        vfs.vmem.activewindow = windowid;
         hasdyn = thiswindow.querySelector('iframe');
         if (hasdyn) { hasdyn.focus(); }
         openTaskMenu(perform = 'close');
@@ -601,6 +644,7 @@ function addToTaskbar(windowid) {
     opened.append(div);
 }
 function openTaskMenu(perform = 'default') {
+    vfs.vmem.activewindow = false;
     let taskmenu = document.getElementById('taskmenu');
     if (perform == 'close') {
         if (taskmenu.hasAttribute('opened')) {

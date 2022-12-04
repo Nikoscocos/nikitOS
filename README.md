@@ -10,3 +10,9 @@ Let's develop this web operating system together!
 # Screenshot
 ![image](https://user-images.githubusercontent.com/77122703/205155177-66940940-c1aa-45cb-a815-fff6cc0ab6c4.png)
 <p align="center">nikitOS running standart applications.</p>
+
+<br>
+
+# Windows 10 Edition
+![image](https://user-images.githubusercontent.com/77122703/205478899-ea202691-a18c-45d2-89fd-c16af4965f41.png)
+<p align="center">Wow! Looks like Windows!</p>

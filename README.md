@@ -15,4 +15,5 @@ Let's develop this web operating system together!
 
 # Windows 10 Edition
 ![image](https://user-images.githubusercontent.com/77122703/205478899-ea202691-a18c-45d2-89fd-c16af4965f41.png)
+![image](https://user-images.githubusercontent.com/77122703/205479065-0960ee56-d7ec-4438-a2bd-8b3f9ff9ee8f.png)
 <p align="center">Wow! Looks like Windows!</p>

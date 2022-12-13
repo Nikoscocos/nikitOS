@@ -12,6 +12,22 @@ function setApps() {
 function setWallpaper(path) {
     document.getElementById(vfs.vmem.glct).style.backgroundImage = `url('${path}')`;
 }
+function initScript(path) {
+    fetch(path, { method: 'GET' })
+    .then(script => script.text())
+    .then(script => {
+        eval(script);
+        vfs.vmem.daemons.push({"name": cfg.name, "desc": "Daemon: " + path, "runat": new Date(), "icon": cfg.icon});
+    });
+}
+function autoStartInit() {
+    if (localStorage.autostart) {
+        autostart = JSON.parse(localStorage.autostart);
+        for (let script of autostart) {
+            initScript(script);
+        }
+    }
+}
 function screenInit() {
     vfs.vmem.taskbar = true;
     vfs.vmem.screen = getScreen();
@@ -20,6 +36,7 @@ function screenInit() {
         date = getDate();
         document.getElementById('dateplace').innerHTML = `${date['hours']}:${date['minutes']}:${date['seconds']}`;
     }, 1000);
+    autoStartInit();
     if (localStorage.wallpaper) { setWallpaper(localStorage.wallpaper); }
     else { setWallpaper(vfs.vmem.wallpaper); }
     setApps();

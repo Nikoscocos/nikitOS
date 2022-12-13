@@ -1,4 +1,3 @@
 setWallpaper('apps/terminal/packages/doomer.jpg')
-
-audio = new Audio('https://str2.pcradio.ru/gr_Kino-med');
+audio = new Audio('https://str5.pcradio.ru/Nirvana-med');
 audio.play();

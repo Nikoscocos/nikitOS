@@ -107,13 +107,6 @@
         }, 1000, winhash);
     }
     function audioPlayBack(winhash, path, title, artist, cover) {
-        token = 'CfazjlmAFu6YAeCM1DlD5W77DAXK76FG8t4OYWAA_VhZLpuzsv0RRs_dwmO83b19';
-        res = `https://fr.ctw.re/api/method/app?token=${token}&user=1&act=activity&title=Pulse&actitle=${title}&desc=${artist}&image=${cover}`;
-
-        fetch(res, {
-            method: 'GET'
-        });
-
         selelem = winhash + '_aud';
         vfs.vmem.svcache[selelem] = new Audio(path);
         thisaudio = vfs.vmem.svcache[selelem];

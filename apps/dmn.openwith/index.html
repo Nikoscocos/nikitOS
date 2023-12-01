@@ -1,0 +1,46 @@
+<contents>
+    <div class="nonceblank"></div>
+</contents>
+<onstart>
+    function checkSelectHash(hash, target) {
+        tobj = vfs.vmem.svcache[hash + '_selected'];
+        document.getElementById(tobj).removeAttribute('selected');
+        target.setAttribute('selected', '');
+        vfs.vmem.svcache[hash + '_selected'] = target.getAttribute('id');
+    }
+    function openWithInit(cid) {
+        twin = getWindowById(cid);
+        path = params.path;
+        ext = path.split('.')[path.split('.').length - 1];
+        program = getFF(ext);
+        appcontent = '<div class="nonceblank">';
+        hashes = [];
+        for (let openwith of program.openwith) {
+            app = vfs.applications.find(o => o.path === 'apps/' + openwith);
+            console.log(app, openwith);
+            rhash = (Math.random() + 1).toString(36).substring(2);
+            hashes.push(rhash);
+            appcontent += `
+                <div class="optionchance" id="opsel_${rhash}" onclick="checkSelectHash('${twin.hash}', this)" ondblclick="startApp('${app.path}', params={path: '${path}'}); doWithWindow(String(twin.realid), 'close')">
+                    <img src="${app.icon}">
+                    <div>
+                        <p class="optitle">${app.name}</p>
+                        <p class="opdesc">${app.path}</p>
+                    </div>
+                </div>
+            `;
+        }
+        changeWindowContent(cid, appcontent + '</div>');
+        document.getElementById('opsel_' + hashes[0]).setAttribute('selected', '');
+        vfs.vmem.svcache[twin.hash + '_selected'] = 'opsel_' + hashes[0];
+    }
+    
+    openWithInit(vfs.vmem.windowcounts);
+</onstart>
+<onclose>
+    selelem = wncfg['hash'] + '_selected';
+    if (selelem in vfs.vmem.svcache) {
+        vfs.vmem.svcache[selelem] = null;
+        delete vfs.vmem.svcache[selelem];
+    }
+</onclose>

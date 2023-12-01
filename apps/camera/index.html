@@ -1,0 +1,50 @@
+<contents>
+</contents>
+<onstart>
+    async function cameraLastImage(hash) {
+        dir = await webfs.getListDir('system/assets/camera')
+        file = dir.files[dir.files.length - 1]
+        image = await webfs.getMediaContent(file.path);
+        target = document.getElementById(hash + '_lastimg');
+        target.src = image;
+        target.style.display = 'block';
+        target.setAttribute('onclick', `startApp('apps/imageview', params={path: file.path})`);
+    }
+    function cameraInit() {
+        twin = getWindowById(vfs.vmem.windowcounts);
+        hash = twin.hash;
+        
+        navigator.mediaDevices.getUserMedia({
+            video: {
+                width: 640,
+                height: 480,
+                facingMode: "user"
+            }
+        })
+        .then(function(stream) {
+            changeWindowContent(twin.realid, `
+                <video autoplay class="webcam" id="${hash}_video"></video>
+                <canvas width="640" height="480" id="${hash}_canvas" style="display: none;"></canvas>
+                <div class="camera_controls">
+                    <button onclick="cameraShot('${hash}')"><i class="fa-solid fa-camera"></i></button>
+                    <img id="${hash}_lastimg" style="display: none;">
+                </div>
+            `);
+            var video = document.getElementById(hash + '_video');
+            video.srcObject = stream;
+            cameraLastImage(hash);
+        })
+    }
+    async function cameraShot(hash) {
+        filename = `system/assets/camera/${(Math.random() + 1).toString(36).substring(2)}.jpg`;
+        var video = document.getElementById(hash + '_video');
+        var canvas = document.getElementById(hash + '_canvas');
+        canvas.getContext('2d').drawImage(video, 0, 0, canvas.width, canvas.height);
+        dataURL = canvas.toDataURL("image/jpeg");
+        await webfs.openFile(filename, metadata={encode: "base64", "createdIn": "camera"});
+        await webfs.writeToFile(filename, dataURL, encode=false);
+        cameraLastImage(hash);
+    }
+    
+    cameraInit();
+</onstart>

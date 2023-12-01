@@ -1,0 +1,109 @@
+<contents>
+</contents>
+<onstart>
+    function startBinaryApp(res, data, params = {}) {
+        if (taskbar) { openTaskMenu(perform = 'close'); }
+        cont = new DOMParser().parseFromString(data, 'text/html');
+        if (cont.querySelector('contents')) { res['content'] = cont.querySelector('contents').innerHTML; }
+        if (cont.querySelector('onclose')) { res['onclose'] = cont.querySelector('onclose').innerHTML; }
+        if (!res['onlyjs']) {
+            let windowid = `window${vfs.vmem.windows.length + 1}`;
+            let windowcount = vfs.vmem.windows.length + 1;
+            var spawnY = 0, spawnX = 0;
+            var winmaxim = '', winminim = '', winclose = '', windbclick = '', styles = '', headermax = '', constyles = '';
+            var spawnY = '85px', spawnX = '50px';
+            if (res['access']['canclose']) { winclose = 'show'; }
+            if (res['access']['canminim']) { winminim = 'show'; }
+            if (res['access']['canmaxim']) { winmaxim = 'show'; }
+            let div = document.createElement('div');
+            div.setAttribute('id', vfs.vmem.windowcounts);
+            div.setAttribute('class', 'window');
+            div.setAttribute('appname', res['name']);
+            div.setAttribute('onmousedown', `doWithWindow('${String(vfs.vmem.windowcounts)}', 'active')`);
+            if (res['access']['canmaxim']) {
+                headermax = ` ondblclick="doWithWindow('${String(vfs.vmem.windowcounts)}', 'maximize')"`;
+            }
+            if (res['style']) { styles = ` style="${res['style']}"` }
+            if (res['contentstyle']) { constyles = ` style="${res['contentstyle']}"` }
+            div.style.width = res['width'] + 'px';
+            div.style.height = res['height'] + 'px';
+            div.style.left = '50px';
+            div.style.top = '85px';
+            content = `
+                <div class="header"${headermax} id="header${vfs.vmem.windowcounts}"${styles}>
+                    <div class="title" id="title${vfs.vmem.windowcounts}">${res['title']}</div>
+                    <div class="buttons" id="buttons${vfs.vmem.windowcounts}">
+                        <div minim onclick="doWithWindow('${String(vfs.vmem.windowcounts)}', 'minimize')" ${winminim}></div>
+                        <div maxim onclick="doWithWindow('${String(vfs.vmem.windowcounts)}', 'maximize')" ${winmaxim}></div>
+                        <div close onclick="doWithWindow('${String(vfs.vmem.windowcounts)}', 'close')" ${winclose}></div>
+                    </div>
+                </div>
+                <div class="content" id="content${vfs.vmem.windowcounts}"${constyles}>
+                    ${res['content']}
+                </div>
+            `;
+            if (!res['width'] == 'auto') { res['width'] = res['width'] + 'px' }
+            if (!res['height'] == 'auto') { res['height'] = res['height'] + 'px' }
+            div.innerHTML = content;
+            document.getElementById('windows').append(div);
+            if (res['id'] && !vfs.vmem.windows.includes(res['id'] )) { windowid = res['id']; }
+            wininfo = {
+                "id": windowid,
+                "title": res['title'],
+                "name": res['name'],
+                "desc": res['desc'],
+                "author": res['author'],
+                "package": res['package'],
+                "started": res['started'],
+                "icon": res['icon'],
+                "realid": vfs.vmem.windowcounts,
+                "maximized": false,
+                "minimized": false,
+                "fullscreen": false,
+                "posY": spawnY,
+                "posX": spawnX,
+                "width": res['width'] + 'px',
+                "height": res['height'] + 'px',
+                "index": windowindexes,
+                "active": true,
+                "canclose": res['access']['canclose'],
+                "canminim": res['access']['canminim'],
+                "canmaxim": res['access']['canmaxim'],
+                "canfocus": res['access']['canfocus'],
+                "onclose": res['onclose'],
+                "hash": (Math.random() + 1).toString(36).substring(2)
+            };
+            vfs.vmem.windows.push(wininfo);
+            draggableWindow(String(vfs.vmem.windowcounts));
+            if (res['resizeble']) {
+                let thiswindow = document.getElementById(String(vfs.vmem.windowcounts));
+                if (res['width']=='auto') { res['width'] = thiswindow.getBoundingClientRect().width }
+                if (res['height']=='auto') { res['height'] = thiswindow.getBoundingClientRect().height }
+                makeResizable(String(vfs.vmem.windowcounts), parseInt(res['width']), parseInt(res['height']));
+            }
+            doWithWindow(String(vfs.vmem.windowcounts), 'active');
+            addToTaskbar(String(vfs.vmem.windowcounts));
+            if (cont.querySelector('onstart')) {
+                toeval = decodeHTMLEntities(cont.querySelector('onstart').innerHTML);
+                window.eval(toeval);
+            }
+            vfs.vmem.windowcounts++;
+        }
+        if (res['onlyjs']) { window.eval(res['js']); }
+    }
+    async function appRunInit() {
+        script = await webfs.getFileContents(params.path);
+        changeWindowTitle(vfs.vmem.windowcounts - 1, params.path);
+        twin = getWindowById(vfs.vmem.windowcounts - 1);
+        binary = JSON.parse(script);
+
+        cfg = binary.cfg;
+        block = atob(binary.binary);
+
+        startBinaryApp(cfg, block);
+
+        doWithWindow(twin.realid, 'close');
+    }
+
+    appRunInit();
+</onstart>

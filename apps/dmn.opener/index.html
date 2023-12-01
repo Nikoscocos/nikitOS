@@ -1,0 +1,177 @@
+<contents>
+</contents>
+<onstart>
+    function _fSelectFile(key, fileid) {
+        if (svcache[key]) {
+            try { document.getElementById(svcache[key]).removeAttribute('selected'); }
+            catch {}
+        }
+        hash = key.split('_')[0];
+        file = document.getElementById(fileid);
+
+        if (!file.hasAttribute('count')) {
+            document.getElementById(hash + '_inputchoice').value = file.getAttribute('path');
+            document.getElementById(hash + '_inputchoicebtn').removeAttribute('disabled');
+        }
+        else {
+            if (document.getElementById(hash + '_inputchoice').value != '') {
+                document.getElementById(hash + '_inputchoice').value = '';
+                document.getElementById(hash + '_inputchoicebtn').setAttribute('disabled', '');
+            }
+        }
+
+        document.getElementById(fileid).setAttribute('selected', '');
+        svcache[key] = fileid;
+    }
+    async function _fOpenFolder(hqq, folder=false, path=false) {
+        try {
+            document.getElementById(hqq + '_inputchoice').value = '';
+            document.getElementById(hqq + '_inputchoicebtn').setAttribute('disabled', '');
+
+            if (path) { path = path; }
+            else { path = folder.getAttribute('path'); }
+
+            contq = document.getElementById(hqq + '_filecon');
+            mesgq = document.getElementById(hqq + '_filemsg');
+            
+            dir = await webfs.getListDir(path);
+
+            if (dir.files.length == 0 && dir.dirs.length == 0) {
+                if (!contq.hasAttribute('hidden')) { contq.setAttribute('hidden', ''); }
+                if (mesgq.hasAttribute('hidden')) { mesgq.removeAttribute('hidden'); }
+
+                document.getElementById(hqq + '_msg').innerHTML = `
+                    <i class="fa-regular fa-folder"></i>
+                    <p>This folder is empty</p>
+                `;
+            }
+            else {
+                if (contq.hasAttribute('hidden')) { contq.removeAttribute('hidden'); }
+                if (!mesgq.hasAttribute('hidden')) { mesgq.setAttribute('hidden', ''); }
+
+                content = _fReturnFiles(dir, hqq);
+                document.getElementById(hqq + '_fileblank').innerHTML = content;
+            }
+            document.getElementById(hqq + '_pathinput').value = path;
+            vfs.vmem.svcache[hqq + '_pathhistory'].push(path);
+        }
+        catch {}
+    }
+    function _fHistoryBack(hash) {
+        try {
+            linker = vfs.vmem.svcache[hash + "_pathhistory"];
+            current = linker[linker.length - 1];
+            vfs.vmem.svcache[hash + "_pathhistory_rev"].push(current);
+            _fOpenFolder(hash, folder=false, path=linker[linker.length - 2]);
+            linker.pop(linker[linker.length - 1]);
+            linker.pop(linker[linker.length]);
+        }
+        catch {}
+    }
+    function _fHistoryRev(hash) {
+        try {
+            linker = vfs.vmem.svcache[hash + "_pathhistory_rev"];
+            _fOpenFolder(hash, folder=false, path=linker[linker.length - 1]);
+            linker.pop(linker[linker.length]);
+        }
+        catch {}
+    }
+    function _fOpenFile(winhash, file) {
+        document.getElementById(hash + '_inputchoicebtn').click();
+    }
+    function _fReturnFiles(object, hash) {
+        fullHTML = '';
+        for (let dir of object.dirs) {
+            fullHTML += `
+            <div hashid="${dir.hash}" name="${dir.name}" count="${dir.count}" create="${dir.create}" ext="dir" path="${dir.path}" class="container__item" onclick="_fSelectFile('${hash}_lastselect', '${hash}_file${dir.hash}')" id="${hash}_file${dir.hash}" ondblclick="_fOpenFolder('${hash}', this)">
+                <i class="fa-solid fa-folder" orangecolor></i>
+                <div><p>${dir.name}</p></div>
+            </div>`;
+        }
+        for (let file of object.files) {
+            fullHTML += `
+            <div hashid="${file.hash}" name="${file.name}" create="${file.create}" ext=".${file.name.split('.')[file.name.split('.').length - 1]}" path="${file.path}" class="container__item" onclick="_fSelectFile('${hash}_lastselect', '${hash}_file${file.hash}')" id="${hash}_file${file.hash}" ondblclick="_fOpenFile('${hash}', this)">
+                <i class="fa fa-file" graycolor></i>
+                <div><p>${file.name}</p></div>
+            </div>`;
+        }
+        return fullHTML;
+    }
+    async function _fUploadFile(hash, fileq) {
+        ppat = await document.getElementById(hash + '_pathinput').value;
+        contq = await document.getElementById(hash + '_fileblank');
+        if (ppat != '/') { filename = ppat + '/' + fileq.name; }
+        else { filename = fileq.name; }
+        fdate = JSON.stringify(new Date());
+        crdq = JSON.parse(fdate);
+        crd = `${crdq.split('T')[0]} ${crdq.split('T')[1].split('.')[0]}`
+        fhash = (Math.random() + 1).toString(36).substring(2);
+        fname = filename.split('/')[filename.split('/').length - 1];
+
+        if (ppat != '/') {}
+        else { ppat = false; }
+
+        await webfs.uploadFile(fileq, path=ppat).then(function() {
+            removeContextMenu();
+            contq.innerHTML += `
+                <div hashid="${fhash}" name="${fname}" create="${crdq}" ext=".${filename.split('.')[filename.split('.').length - 1]}" path="${filename}" class="container__item" onclick="_fSelectFile('${hash}_lastselect', '${hash}_file${fhash}')" id="${hash}_file${fhash}" ondblclick="_fOpenFile('${hash}', this)">
+                    <i class="fa fa-file" graycolor></i>
+                    <div><p>${fname}</p></div>
+                </div>`;
+        });
+    }
+    async function _fInit(cwd=false) {
+        if (cwd) { dir = await webfs.getListDir(cwd) }
+        else { dir = await webfs.getListDir() }
+        thiswin = getWindowById(vfs.vmem.windowcounts - 1);
+        hash = thiswin.hash;
+        id = thiswin.realid;
+        content = _fReturnFiles(dir, hash);
+        template = `
+        <div class="blankwindow" style="padding: 1px;" mini>
+            <div class="filemanager-bar">
+                <div>
+                    <button onclick="_fHistoryBack('${hash}')"><i class="fa-solid fa-arrow-left"></i></button>
+                    <button onclick="_fHistoryRev('${hash}')"><i class="fa-solid fa-arrow-right"></i></button>
+                </div>
+                <input class="pathinput" id="${hash}_pathinput" placeholder="Directory" value="/" onchange="_fOpenFolder('${hash}', folder=false, path=this.value)">
+                <input class="searchinput" id="${hash}_searchinput" placeholder="Search...">
+            </div>
+            <div class="qcontainer" id="${hash}_filecon">
+                <div class="wrapper-center" id="${hash}_fileblank">
+                    ${content}
+                </div>
+            </div>
+            <div class="filemanager-full" id="${hash}_filemsg" hidden>
+                <div class="message" id="${hash}_msg"></div>
+            </div>
+            <div class="inputchoice" id="${hash}_filemsg">
+                <input id="${hash}_inputchoice" class="pathinput" placeholder="Path to file...">
+                <button id="${hash}_inputchoicebtn" onclick="var path = document.getElementById('${hash}_inputchoice').value; ${params.execute} doWithWindow('${id}', 'close'); doWithWindow('${params.wid}', 'active');" disabled>Open</button>
+                <button onclick="doWithWindow('${id}', 'close'); doWithWindow('${params.wid}', 'active');">Cancel</button>
+            </div>
+        </div>`;
+        changeWindowContent(id, template);
+        vfs.vmem.svcache[hash + '_pathhistory'] = ['/'];
+        vfs.vmem.svcache[hash + '_pathhistory_rev'] = [];
+
+        vfs.vmem.svcache[hash + '_cache'] = [
+            {name: 'Open Terminal window here', action: `startApp('apps/terminal', params={cwd: document.getElementById(hash + '_pathinput').value})`, label: false, rem: true},
+            {name: 'Exit', action: `doWithWindow('${id}', 'close')`, label: false, rem: true}
+        ]
+
+        document.getElementById('content' + id).setAttribute('oncontextmenu', `
+            event.preventDefault();
+            spawnContextMenu(event, vfs.vmem.svcache['${hash}_cache']);
+            return false;
+        `);
+        document.addEventListener('keydown', function(event) {
+            const key = event.key; // const {key} = event;
+            if (key === "Backspace" || key === "Delete") {
+                _fHistoryBack(hash);
+            }
+        });
+    }
+
+    _fInit();
+</onstart>

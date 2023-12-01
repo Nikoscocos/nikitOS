@@ -34,7 +34,10 @@ function startApp(package, params = {}) {
                 div.style.top = '85px';
                 content = `
                     <div class="header"${headermax} id="header${vfs.vmem.windowcounts}"${styles}>
-                        <div class="title" id="title${vfs.vmem.windowcounts}">${res['title']}</div>
+                        <div class="title">
+                            <img class="appicon" src="${res.icon}">
+                            <wtitle id="title${vfs.vmem.windowcounts}">${res['title']}</wtitle>
+                        </div>
                         <div class="buttons" id="buttons${vfs.vmem.windowcounts}">
                             <div minim onclick="doWithWindow('${String(vfs.vmem.windowcounts)}', 'minimize')" ${winminim}></div>
                             <div maxim onclick="doWithWindow('${String(vfs.vmem.windowcounts)}', 'maximize')" ${winmaxim}></div>
@@ -74,8 +77,7 @@ function startApp(package, params = {}) {
                     "canmaxim": res['access']['canmaxim'],
                     "canfocus": res['access']['canfocus'],
                     "onclose": res['onclose'],
-                    "hash": (Math.random() + 1).toString(36).substring(2),
-                    "intouch": false
+                    "hash": (Math.random() + 1).toString(36).substring(2)
                 };
                 vfs.vmem.windows.push(wininfo);
                 draggableWindow(String(vfs.vmem.windowcounts));
@@ -100,52 +102,11 @@ function startApp(package, params = {}) {
 function draggableWindow(windowid) {
     var pos1 = 0, pos2 = 0, pos3 = 0, pos4 = 0;
     let elmnt = document.getElementById(windowid);
-    var startX=0, startY=0;
-
     try {
         let header = document.getElementById('header' + elmnt.id);
         if (header) { header.onmousedown = mouseHeaderDown; }
     }
     catch {}
-
-    elmnt.addEventListener('touchstart',function(e) {
-        startX = e.changedTouches[0].pageX;
-        startY = e.changedTouches[0].pageY;
-    });
-
-    elmnt.addEventListener('touchmove',function(e) {
-        e.preventDefault();
-        var deltaX = e.changedTouches[0].pageX - startX;
-        var deltaY = e.changedTouches[0].pageY - startY;
-        elmnt.style.left = elmnt.offsetLeft + deltaX + 'px';
-        elmnt.style.top = elmnt.offsetTop + deltaY + 'px';
-
-        startX = e.changedTouches[0].pageX;
-        startY = e.changedTouches[0].pageY;
-    });
-
-    let doubleClick = function () {
-        console.log('double click')
-    }
-    
-    wconf = getWindowById(parseInt(elmnt.id))
-
-    let doubleTouch = function (e) {
-        if (e.touches.length === 1) {
-            if (!wconf.intouch) {
-                wconf.intouch = e.timeStamp + 400
-            }
-            else if (e.timeStamp <= wconf.intouch) {
-                e.preventDefault()
-                doWithWindow(elmnt.id, 'maximize')
-                wconf.intouch = null
-            }
-            else {
-                wconf.intouch = e.timeStamp + 400
-            }
-        }
-    }
-    elmnt.addEventListener('touchstart', doubleTouch)
     function mouseHeaderDown(e) {
         if (!getWindowById(parseInt(windowid))['maximized']) {
             e = e || window.event;
@@ -452,7 +413,7 @@ function doWithWindow(windowid, action) {
             thiswindow.style.transition = '0.2s';
             thiswindow.style.width = '100%';
             if (taskbar.hasAttribute('bottom')) { thiswindow.style.top = '35px'; thiswindow.style.height = 'calc(100% - 35px)'; }
-            else { thiswindow.style.height = '100%'; }
+            else { thiswindow.style.height = 'calc(100% - 35px)'; }
             thiswindow.addEventListener('transitionend', () => thiswindow.style.transition = 'none');
             thisheader.style.borderRadius = '0px';
             thiscontent.style.borderRadius = '0px';
@@ -496,9 +457,9 @@ function doWithWindow(windowid, action) {
         }
     }
     if (action == 'active') {
-        vfs.vmem.activewindow = windowid;
         hasdyn = thiswindow.querySelector('iframe');
         if (hasdyn) { hasdyn.focus(); }
+        vfs.vmem.activewindow = parseInt(windowid);
         openTaskMenu(perform = 'close');
         for (let i = 0; i < vfs.vmem.windows.length; i += 1) {
             try {
@@ -638,30 +599,30 @@ function addToTaskbar(windowid) {
     div.setAttribute('active', '');
     div.setAttribute('onclick', `doWithWindow('${windowid}', 'minimize')`);
     div.innerHTML = `
-        <img src="${icon}">
+        <img id="taskimage${windowid}" src="${icon}">
         <p id="tasktitle${windowid}">${thiswindow['title']}</p>
     `;
     opened.append(div);
 }
 function openTaskMenu(perform = 'default') {
-    vfs.vmem.activewindow = false;
     let taskmenu = document.getElementById('taskmenu');
     if (perform == 'close') {
         if (taskmenu.hasAttribute('opened')) {
-            taskmenu.style.top = '-100%';
+            taskmenu.style.bottom = '-100%';
             taskmenu.removeAttribute('opened');
             document.querySelector('.startic').removeAttribute('active');
         }
     }
     else {
+        vfs.vmem.activewindow = false;
         if (taskmenu.hasAttribute('opened')) {
-            taskmenu.style.top = '-100%';
+            taskmenu.style.bottom = '-100%';
             taskmenu.removeAttribute('opened');
             document.querySelector('.startic').removeAttribute('active');
         }
         else {
             doWithAllWindows('unactive');
-            taskmenu.style.top = '35px';
+            taskmenu.style.bottom = '35px';
             taskmenu.setAttribute('opened', '');
             document.querySelector('.startic').setAttribute('active', '');
         }

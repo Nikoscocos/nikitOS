@@ -3,6 +3,11 @@
         <meta name="viewport" content="width=device-width, initial-scale=1">
         <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
         <meta http-equiv="Content-Security-Policy" content="upgrade-insecure-requests">
+        <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+
+        <link rel="icon" href="favicon.ico">
+
+        <script src="https://cdn.jsdelivr.net/npm/js-base64@2.5.2/base64.min.js"></script>
         
         <script src="system/lib/jsmediatags.js"></script>
         <script src="system/lib/glib.js"></script>
@@ -11,6 +16,9 @@
         <script src="system/lib/hotkeys.js"></script>
         <script src="system/lib/nots.js"></script>
         <script src="system/lib/desktop.js"></script>
+        <script src="system/lib/simpleIDB.js"></script>
+        <script src="system/lib/webfs.js"></script>
+        <script src="system/lib/kernel.js"></script>
 
         <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.0/dist/css/bootstrap.min.css" rel="stylesheet">
         <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.1.2/css/all.min.css" rel="stylesheet">
@@ -27,7 +35,7 @@
             <div class="taskmenu" id="taskmenu">
                 <p>Applications</p>
             </div>
-            <div class="taskbar" bottom="" id="taskbar">
+            <div class="taskbar" bottq id="taskbar">
                 <div class="startic" onclick="openTaskMenu()">Apps</div>
                 <div class="openedapps" id="openedapps"></div>
                 <div class="date" id="dateplace">00:00:00</div>

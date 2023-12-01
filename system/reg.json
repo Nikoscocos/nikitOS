@@ -1,0 +1,35 @@
+{
+    "system": {
+        "filesystem": "1.0.0",
+        "updatefilesystem": false,
+        "display": {
+            "wallpaper": "images/IMG_0077.JPG",
+            "scale": "1",
+            "dpi": "100",
+            "screensaver": {
+                "enabled": false,
+                "image": "system/assets/screensaver/xp.gif",
+                "waittime": 60
+            },
+            "glct": "display0",
+            "glts": "taskmenu"
+        },
+        "autostart": "system/autostart",
+        "openwith": [
+            {"ext": "", "name": "File", "openwith": ["textedit"]},
+            {"ext": ".wapp/.wp/.webapp/.wa", "name": "Web-Application", "openwith": ["wapp", "textedit"]},
+            {"ext": ".jpg/.jpeg/.png/.webp/.ico/.gif", "name": "Image file", "openwith": ["imageview"]},
+            {"ext": ".mp3/.ogg/.wav", "name": "Audio file", "openwith": ["music"]},
+            {"ext": ".mp4/.mkv/.3gp/.webm/.vid/.mov", "name": "Video file", "openwith": ["videoview"]},
+            {"ext": ".text/.txt/.log/.cfg", "name": "Text file", "openwith": ["textedit"]},
+            {"ext": ".app/.nikitos/.exe/.bin/", "name": "Native application", "openwith": ["dmn.apprun"]},
+            {"ext": ".html/.htm/.htmk/.web/.webview", "name": "Web-page file", "openwith": ["webview", "textedit"]},
+            {"ext": ".swf/.flashplayer", "name": "Flash Player file", "openwith": ["flashplayer"]},
+            {"ext": ".nes/.nesemu", "name": "NES ROM-file", "openwith": ["nesjs"]},
+            {"ext": ".vm/.webvm", "name": "Virtual Machine file", "openwith": ["webvm", "textedit"]},
+            {"ext": ".js/.sh/.script/.jsrun", "name": "nikitOS script file", "openwith": ["jsrun", "textedit"]},
+            {"ext": "folder", "name": "Folder", "openwith": ["files"]},
+            {"ext": "*", "name": "Unknown format file", "openwith": ["textedit"]}
+        ]
+    }
+}

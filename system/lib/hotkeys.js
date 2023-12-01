@@ -7,6 +7,7 @@ document.onkeydown = function(evt) {
         isEscape = (evt.keyCode === 27);
     }
     if (isEscape) {
-        openTaskMenu()
+        openTaskMenu();
+        removeContextMenu();
     }
 };

@@ -1,0 +1,552 @@
+{
+    "name": "webFS",
+    "createDate": "2023-03-01T18:37:39.325Z",
+    "root": {
+        "files": [
+            {
+                "isdir": true,
+                "name": "apps",
+                "createDate": "2023-03-01T18:39:38.848Z",
+                "metadata": {},
+                "hash": "psfsdv2j7h",
+                "files": [
+                    {
+                        "isdir": false,
+                        "name": "surf.wa",
+                        "createDate": "2023-03-02T09:39:16.648Z",
+                        "metadata": {
+                            "encode": "base64"
+                        },
+                        "hash": "67rlh65qxu"
+                    },
+                    {
+                        "isdir": false,
+                        "name": "spacecraft.wa",
+                        "createDate": "2023-03-02T09:39:22.819Z",
+                        "metadata": {
+                            "encode": "base64"
+                        },
+                        "hash": "xdheepaf6o"
+                    },
+                    {
+                        "isdir": false,
+                        "name": "nikitOS.wa",
+                        "createDate": "2023-03-02T09:39:26.535Z",
+                        "metadata": {
+                            "encode": "base64"
+                        },
+                        "hash": "843z158lmd"
+                    },
+                    {
+                        "isdir": false,
+                        "name": "dynmap.wapp",
+                        "createDate": "2023-05-07T19:31:06.479Z",
+                        "metadata": {
+                            "encode": "base64"
+                        },
+                        "hash": "8ji9t9yvfy"
+                    }
+                ]
+            },
+            {
+                "isdir": true,
+                "name": "images",
+                "createDate": "2023-03-01T18:39:45.246Z",
+                "metadata": {},
+                "hash": "az41yusk1s",
+                "files": [
+                    {
+                        "isdir": true,
+                        "name": "wallpapers",
+                        "createDate": "2023-03-01T18:40:35.239Z",
+                        "metadata": {},
+                        "hash": "uxvnn55wv6",
+                        "files": [
+                            {
+                                "isdir": false,
+                                "name": "Leaf.jpg",
+                                "createDate": "2023-03-01T18:40:47.475Z",
+                                "metadata": {
+                                    "encode": "base64"
+                                },
+                                "hash": "h42xtq6yw7"
+                            },
+                            {
+                                "isdir": false,
+                                "name": "LightBulb.jpg",
+                                "createDate": "2023-03-01T18:40:59.775Z",
+                                "metadata": {
+                                    "encode": "base64"
+                                },
+                                "hash": "n0syvny4wfg"
+                            },
+                            {
+                                "isdir": false,
+                                "name": "Tree.jpg",
+                                "createDate": "2023-03-01T18:41:23.932Z",
+                                "metadata": {
+                                    "encode": "base64"
+                                },
+                                "hash": "y89n8rl8zy"
+                            },
+                            {
+                                "isdir": false,
+                                "name": "Wood.jpg",
+                                "createDate": "2023-03-01T18:41:33.642Z",
+                                "metadata": {
+                                    "encode": "base64"
+                                },
+                                "hash": "hsykmqzuqu"
+                            },
+                            {
+                                "isdir": false,
+                                "name": "Loveles.jpg",
+                                "createDate": "2023-03-01T18:41:37.524Z",
+                                "metadata": {
+                                    "encode": "base64"
+                                },
+                                "hash": "hdr4olqwnni"
+                            },
+                            {
+                                "isdir": false,
+                                "name": "ColdWarm.jpg",
+                                "createDate": "2023-03-01T18:41:41.116Z",
+                                "metadata": {
+                                    "encode": "base64"
+                                },
+                                "hash": "gq7j11ntoh"
+                            }
+                        ]
+                    },
+                    {
+                        "isdir": false,
+                        "name": "Nagiev.gif",
+                        "createDate": "2023-05-10T19:06:38.082Z",
+                        "metadata": {
+                            "encode": "base64"
+                        },
+                        "hash": "5jq5uk5exm"
+                    },
+                    {
+                        "isdir": false,
+                        "name": "IMG_0077.JPG",
+                        "createDate": "2023-05-20T06:55:29.240Z",
+                        "metadata": {
+                            "encode": "base64"
+                        },
+                        "hash": "2w1gp0yxzm"
+                    }
+                ]
+            },
+            {
+                "isdir": true,
+                "name": "games",
+                "createDate": "2023-03-01T18:39:49.070Z",
+                "metadata": {},
+                "hash": "hyfv853wmx",
+                "files": [
+                    {
+                        "isdir": true,
+                        "name": "NES",
+                        "createDate": "2023-03-01T18:44:25.584Z",
+                        "metadata": {},
+                        "hash": "4243rh1q3e",
+                        "files": [
+                            {
+                                "isdir": false,
+                                "name": "mario.nes",
+                                "createDate": "2023-03-01T18:46:19.497Z",
+                                "metadata": {
+                                    "encode": "base64"
+                                },
+                                "hash": "anl4u06603"
+                            },
+                            {
+                                "isdir": false,
+                                "name": "tetris.nes",
+                                "createDate": "2023-03-01T18:46:24.148Z",
+                                "metadata": {
+                                    "encode": "base64"
+                                },
+                                "hash": "ffi8vppezh"
+                            }
+                        ]
+                    },
+                    {
+                        "isdir": true,
+                        "name": "Flash Player",
+                        "createDate": "2023-03-01T18:44:45.510Z",
+                        "metadata": {},
+                        "hash": "jm0ytxwqagf",
+                        "files": [
+                            {
+                                "isdir": false,
+                                "name": "or.swf",
+                                "createDate": "2023-03-01T18:46:52.425Z",
+                                "metadata": {
+                                    "encode": "base64"
+                                },
+                                "hash": "x8gbo5z1i1k"
+                            },
+                            {
+                                "isdir": false,
+                                "name": "mista.swf",
+                                "createDate": "2023-03-01T18:47:04.978Z",
+                                "metadata": {
+                                    "encode": "base64"
+                                },
+                                "hash": "cntchsxxnm"
+                            }
+                        ]
+                    }
+                ]
+            },
+            {
+                "isdir": true,
+                "name": "other",
+                "createDate": "2023-03-01T18:40:01.959Z",
+                "metadata": {},
+                "hash": "f9nd3z0xg1",
+                "files": []
+            },
+            {
+                "isdir": true,
+                "name": "code",
+                "createDate": "2023-03-01T18:40:07.974Z",
+                "metadata": {},
+                "hash": "0z25gqijjx",
+                "files": [
+                    {
+                        "isdir": false,
+                        "name": "generated (25).py",
+                        "createDate": "2023-03-03T13:18:55.646Z",
+                        "metadata": {
+                            "encode": "base64"
+                        },
+                        "hash": "k3hlc08zcl"
+                    }
+                ]
+            },
+            {
+                "isdir": true,
+                "name": "webvm",
+                "createDate": "2023-03-01T19:59:00.398Z",
+                "metadata": {},
+                "hash": "2afbc226m0h",
+                "files": [
+                    {
+                        "isdir": true,
+                        "name": "vms",
+                        "createDate": "2023-03-02T05:40:52.096Z",
+                        "metadata": {},
+                        "hash": "0rbt75nx3d",
+                        "files": [
+                            {
+                                "isdir": false,
+                                "name": "linux.vm",
+                                "createDate": "2023-03-02T05:45:54.763Z",
+                                "metadata": {
+                                    "encode": "base64"
+                                },
+                                "hash": "l4x8vxpgwi"
+                            },
+                            {
+                                "isdir": false,
+                                "name": "tcore.vm",
+                                "createDate": "2023-03-03T15:49:35.917Z",
+                                "metadata": {
+                                    "encode": "base64"
+                                },
+                                "hash": "gce1s90wym"
+                            }
+                        ]
+                    },
+                    {
+                        "isdir": true,
+                        "name": "distros",
+                        "createDate": "2023-03-02T08:45:11.865Z",
+                        "metadata": {},
+                        "hash": "2bci80wat7l",
+                        "files": [
+                            {
+                                "isdir": false,
+                                "name": "linux.iso",
+                                "createDate": "2023-03-02T08:45:30.399Z",
+                                "metadata": {
+                                    "encode": "base64"
+                                },
+                                "hash": "ymuafmyr05"
+                            },
+                            {
+                                "isdir": false,
+                                "name": "tcore.iso",
+                                "createDate": "2023-03-03T15:50:34.724Z",
+                                "metadata": {
+                                    "encode": "base64"
+                                },
+                                "hash": "bpjsjfd7q4"
+                            },
+                            {
+                                "isdir": false,
+                                "name": "debian.iso",
+                                "createDate": "2023-03-03T16:00:38.768Z",
+                                "metadata": {
+                                    "encode": "base64"
+                                },
+                                "hash": "ydmrgziqpx"
+                            }
+                        ]
+                    }
+                ]
+            },
+            {
+                "isdir": true,
+                "name": "scripts",
+                "createDate": "2023-05-07T07:15:49.364Z",
+                "metadata": {},
+                "hash": "m4jlstwiwu",
+                "files": [
+                    {
+                        "isdir": false,
+                        "name": "zatrol.js",
+                        "createDate": "2023-05-07T07:17:23.665Z",
+                        "metadata": {
+                            "encode": "base64"
+                        },
+                        "hash": "qfthwwpyjeh"
+                    },
+                    {
+                        "isdir": false,
+                        "name": "rotate.js",
+                        "createDate": "2023-05-07T07:17:30.331Z",
+                        "metadata": {
+                            "encode": "base64"
+                        },
+                        "hash": "40gaiihjdn"
+                    },
+                    {
+                        "isdir": false,
+                        "name": "fuck.js",
+                        "createDate": "2023-05-07T07:39:29.700Z",
+                        "metadata": {
+                            "encode": "base64"
+                        },
+                        "hash": "hmdr53hv49"
+                    },
+                    {
+                        "isdir": false,
+                        "name": "screensaver.js",
+                        "createDate": "2023-05-07T11:13:44.584Z",
+                        "metadata": {
+                            "encode": "base64"
+                        },
+                        "hash": "820w2j3nya"
+                    },
+                    {
+                        "isdir": false,
+                        "name": "dpi.js",
+                        "createDate": "2023-05-07T13:41:44.770Z",
+                        "metadata": {
+                            "encode": "base64"
+                        },
+                        "hash": "5c7z34adaxl"
+                    },
+                    {
+                        "isdir": false,
+                        "name": "scale.js",
+                        "createDate": "2023-05-08T07:42:14.330Z",
+                        "metadata": {
+                            "encode": "base64"
+                        },
+                        "hash": "0o5jy9hc57k"
+                    }
+                ]
+            },
+            {
+                "isdir": true,
+                "name": "system",
+                "createDate": "2023-05-07T10:30:47.392Z",
+                "metadata": {},
+                "hash": "oeph6thqmg",
+                "files": [
+                    {
+                        "isdir": false,
+                        "name": "reg.json",
+                        "createDate": "2023-05-07T10:32:03.511Z",
+                        "metadata": {},
+                        "hash": "pzqrmjy60m"
+                    },
+                    {
+                        "isdir": true,
+                        "name": "scripts",
+                        "createDate": "2023-05-07T10:32:25.498Z",
+                        "metadata": {},
+                        "hash": "khrpbm2pu",
+                        "files": [
+                            {
+                                "isdir": false,
+                                "name": "autostart.js",
+                                "createDate": "2023-05-07T19:57:14.618Z",
+                                "metadata": {
+                                    "encode": "base64"
+                                },
+                                "hash": "602eavr3na"
+                            },
+                            {
+                                "isdir": false,
+                                "name": "closeall.js",
+                                "createDate": "2023-05-07T20:17:43.697Z",
+                                "metadata": {
+                                    "encode": "base64"
+                                },
+                                "hash": "xsopmyuxh3"
+                            }
+                        ]
+                    },
+                    {
+                        "isdir": true,
+                        "name": "autostart",
+                        "createDate": "2023-05-07T10:32:32.821Z",
+                        "metadata": {},
+                        "hash": "8e5tajbmatf",
+                        "files": [
+                            {
+                                "isdir": false,
+                                "name": "hello.js",
+                                "createDate": "2023-05-07T10:35:05.236Z",
+                                "metadata": {
+                                    "encode": "base64"
+                                },
+                                "hash": "ft1hdn47dc"
+                            },
+                            {
+                                "isdir": false,
+                                "name": "screensaver.js",
+                                "createDate": "2023-05-07T19:43:09.932Z",
+                                "metadata": {
+                                    "encode": "base64"
+                                },
+                                "hash": "98lw09aqx3"
+                            }
+                        ]
+                    },
+                    {
+                        "isdir": true,
+                        "name": "assets",
+                        "createDate": "2023-05-07T13:13:10.067Z",
+                        "metadata": {},
+                        "hash": "j55c27rugz",
+                        "files": [
+                            {
+                                "isdir": true,
+                                "name": "screensaver",
+                                "createDate": "2023-05-07T13:13:31.217Z",
+                                "metadata": {},
+                                "hash": "xcc8kd9xv1",
+                                "files": [
+                                    {
+                                        "isdir": false,
+                                        "name": "xp.gif",
+                                        "createDate": "2023-05-07T13:13:51.387Z",
+                                        "metadata": {
+                                            "encode": "base64"
+                                        },
+                                        "hash": "ca36iyz05w"
+                                    },
+                                    {
+                                        "isdir": false,
+                                        "name": "matrix.gif",
+                                        "createDate": "2023-05-07T13:14:23.273Z",
+                                        "metadata": {
+                                            "encode": "base64"
+                                        },
+                                        "hash": "x9wbkixgp2"
+                                    }
+                                ]
+                            },
+                            {
+                                "isdir": true,
+                                "name": "panic",
+                                "createDate": "2023-05-07T13:59:24.143Z",
+                                "metadata": {},
+                                "hash": "lipn8nnonk",
+                                "files": [
+                                    {
+                                        "isdir": false,
+                                        "name": "panic.png",
+                                        "createDate": "2023-05-07T13:59:35.827Z",
+                                        "metadata": {
+                                            "encode": "base64"
+                                        },
+                                        "hash": "0sz6vwd9nq"
+                                    }
+                                ]
+                            },
+                            {
+                                "isdir": true,
+                                "name": "wallpapers",
+                                "createDate": "2023-05-08T07:33:31.046Z",
+                                "metadata": {},
+                                "hash": "5zzs5049i4",
+                                "files": [
+                                    {
+                                        "isdir": false,
+                                        "name": "sky.png",
+                                        "createDate": "2023-05-08T07:34:08.118Z",
+                                        "metadata": {
+                                            "encode": "base64"
+                                        },
+                                        "hash": "tq4sfnj9dw"
+                                    },
+                                    {
+                                        "isdir": false,
+                                        "name": "dmesg.png",
+                                        "createDate": "2023-05-08T07:34:14.581Z",
+                                        "metadata": {
+                                            "encode": "base64"
+                                        },
+                                        "hash": "cmwmu1xwji"
+                                    },
+                                    {
+                                        "isdir": false,
+                                        "name": "japan.png",
+                                        "createDate": "2023-05-08T07:34:19.767Z",
+                                        "metadata": {
+                                            "encode": "base64"
+                                        },
+                                        "hash": "yaz3an9hil"
+                                    },
+                                    {
+                                        "isdir": false,
+                                        "name": "cube.png",
+                                        "createDate": "2023-05-08T07:34:24.433Z",
+                                        "metadata": {
+                                            "encode": "base64"
+                                        },
+                                        "hash": "tnhucis1ye"
+                                    }
+                                ]
+                            }
+                        ]
+                    },
+                    {
+                        "isdir": false,
+                        "name": "desktop.json",
+                        "createDate": "2023-05-09T09:44:21.948Z",
+                        "metadata": {},
+                        "hash": "ypb0d1worh"
+                    },
+                    {
+                        "isdir": false,
+                        "name": "shorcuts.json",
+                        "createDate": "2023-05-09T09:44:51.514Z",
+                        "metadata": {},
+                        "hash": "87b6uyxq8s"
+                    }
+                ]
+            }
+        ],
+        "map": [],
+        "cache": {}
+    }
+}

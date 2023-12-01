@@ -11,12 +11,10 @@ function showNotification(icon, title, text, timeout=7, sound='/system/snd/Subma
     target = document.getElementById('nots');
     thistarget = document.getElementById('innots');
     thistarget.innerHTML = template;
-    if (!taskbar || taskbar.style.display == 'none') { target.style.top = '0px'; }
     target.style.right = '0px';
+    target.style.float = 'right';
     if (playsound) { audio.play(); }
     setTimeout(() => {
         target.style.right = '-100%';
-        if (!taskbar || taskbar.style.display == 'none') {target.style.top = '0px'; }
-        else {target.style.top = '35px'; }
     }, timeout * 1000)
 }

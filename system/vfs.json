@@ -1,46 +1,70 @@
 {
     "applications": [
-        {"name": "About nikitOS", "icon": "apps/about/icon.png", "path": "apps/about"},
-        {"name": "Calculator", "icon": "apps/calculator/icon.png", "path": "apps/calculator"},
-        {"name": "Process manager", "icon": "apps/processmanager/icon.png", "path": "apps/processmanager"},
-        {"name": "Python 3.10.7", "icon": "apps/python3/icon.png", "path": "apps/python3"},
-        {"name": "Grand Theft Auto", "icon": "apps/gta/icon.png", "path": "apps/gta"},
-        {"name": "Graphical tests", "icon": "apps/gtests/icon.png", "path": "apps/gtests"},
-        {"name": "Terminal", "icon": "apps/terminal/icon.png", "path": "apps/terminal"}
+        {"name": "Files", "icon": "apps/files/icon.png", "path": "apps/files", "show": true},
+        {"name": "About nikitOS", "icon": "apps/about/icon.png", "path": "apps/about", "show": true},
+        {"name": "Calculator", "icon": "apps/calculator/icon.png", "path": "apps/calculator", "show": true},
+        {"name": "Process manager", "icon": "apps/processmanager/icon.png", "path": "apps/processmanager", "show": true},
+        {"name": "System Preferences", "icon": "apps/preferences/icon.png", "path": "apps/preferences", "show": true},
+        {"name": "Minecraft 1.5.2", "icon": "apps/minecraft1.5.2/icon.png", "path": "apps/minecraft1.5.2", "show": true},
+        {"name": "Minecraft 1.8.8", "icon": "apps/minecraft1.8.8/icon.png", "path": "apps/minecraft1.8.8", "show": true},
+        {"name": "Grand Theft Auto", "icon": "apps/gta/icon.png", "path": "apps/gta", "show": true},
+        {"name": "Half-Life: Uplink", "icon": "apps/hl1/icon.png", "path": "apps/hl1", "show": true},
+        {"name": "Python 3.10.7", "icon": "apps/python3/icon.png", "path": "apps/python3", "show": true},
+        {"name": "Graphical tests", "icon": "apps/gtests/icon.png", "path": "apps/gtests", "show": true},
+        {"name": "Terminal", "icon": "apps/terminal/icon.png", "path": "apps/terminal", "show": true, "params": "{cwd: '/'}"},
+        {"name": "Pulse Music", "icon": "apps/pulse/icon.png", "path": "apps/pulse", "show": true},
+        {"name": "Store", "icon": "apps/store/icon.png", "path": "apps/store", "show": true},
+        {"name": "Textedit", "icon": "apps/textedit/icon.png", "path": "apps/textedit", "show": true},
+        {"name": "Video viewer", "icon": "apps/videoview/icon.png", "path": "apps/videoview", "show": true},
+        {"name": "Image viewer", "icon": "apps/imageview/icon.png", "path": "apps/imageview", "show": true},
+        {"name": "Camera", "icon": "apps/camera/icon.png", "path": "apps/camera", "show": true},
+        {"name": "Web-application viewer", "icon": "apps/wapp/icon.png", "path": "apps/wapp", "show": false},
+        {"name": "nikitOS Script Manager", "icon": "apps/jsrun/icon.png", "path": "apps/jsrun", "show": false},
+        {"name": "Applications Manager", "icon": "apps/apprun/icon.png", "path": "apps/apprun", "show": false},
+        {"name": "webVM Virtual Machine", "icon": "apps/webvm/icon.png", "path": "apps/webvm", "show": false}
     ],
     "vmem": {
         "windows": [],
+        "import": [],
         "svcache": {
             "term_aliases": [
                 {"name": "rm -rf /*", "command": "sh apps/terminal/packages/zatrol.js"},
-                {"name": "cls", "command": "clear"}
+                {"name": "cls", "command": "clear"},
+                {"name": "py", "command": "run python3"}
             ]
+        },
+        "kernel": {
+            "threads": {},
+            "proc": {}
         },
         "clickcycles": 0,
         "windowcounts": 0,
         "windowindexes": 0,
         "taskbar": false,
         "activewindow": false,
+        "activeinmenu": false,
         "wallpaper": "system/ico/wall.png",
         "glct": "display0",
         "glts": "taskmenu"
     },
     "fileformats": [
-        {"ext": "", "name": "File", "openwith": ["com.textedit"]},
-        {"ext": ".wapp/.wp/.webapp", "name": "Web-Application", "openwith": ["com.wappmng", "com.textedit"]},
-        {"ext": ".jpg/.jpeg/.png/.webp", "name": "Image file", "openwith": ["com.imageview"]},
-        {"ext": ".mp3/.ogg/.wav", "name": "Audio file", "openwith": ["com.music"]},
-        {"ext": ".mp4/.mkv/.3gp/.webm/.vid/.mov", "name": "Video file", "openwith": ["com.videoview"]},
-        {"ext": ".js", "name": "JavaScript code", "openwith": ["dmn.jsrun", "com.textedit"]},
-        {"ext": ".text/.txt/.log/.cfg", "name": "Text file", "openwith": ["com.textedit"]},
-        {"ext": ".app/.nikitos/.exe/.bin/", "name": "Native application", "openwith": ["dmn.apprun"]},
-        {"ext": ".html/.htm/.htmk/.web/.webview", "name": "Web-page file", "openwith": ["com.webview", "com.textedit"]},
-        {"ext": ".pyjs/.pyva", "name": "JavaScript + Python file", "openwith": ["dmn.pyva", "com.textedit"]},
-        {"ext": ".swf/.flashplayer", "name": "Flash Player file", "openwith": ["com.flashplayer"]},
-        {"ext": ".nes/.nesemu", "name": "NES ROM-file", "openwith": ["com.nesjs"]},
-        {"ext": ".vm/.webvm", "name": "Virtual Machine file", "openwith": ["com.webvm"]},
-        {"ext": "folder", "name": "Folder", "openwith": ["com.files"]},
-        {"ext": "*", "name": "Unkown format file", "openwith": ["com.textedit"]}
+        {"ext": "", "name": "File", "openwith": ["textedit"]},
+        {"ext": ".wapp/.wp/.webapp/.wa", "name": "Web-Application", "openwith": ["wapp", "textedit"]},
+        {"ext": ".jpg/.jpeg/.png/.webp/.ico/.gif", "name": "Image file", "openwith": ["imageview"]},
+        {"ext": ".mp3/.ogg/.wav", "name": "Audio file", "openwith": ["music"]},
+        {"ext": ".mp4/.mkv/.3gp/.webm/.vid/.mov", "name": "Video file", "openwith": ["videoview"]},
+        {"ext": ".text/.txt/.log/.cfg", "name": "Text file", "openwith": ["textedit"]},
+        {"ext": ".app/.nikitos/.exe/.bin/", "name": "Native application", "openwith": ["apprun", "textedit"]},
+        {"ext": ".html/.htm/.htmk/.web/.webview", "name": "Web-page file", "openwith": ["webview", "textedit"]},
+        {"ext": ".swf/.flashplayer", "name": "Flash Player file", "openwith": ["flashplayer"]},
+        {"ext": ".nes/.nesemu", "name": "NES ROM-file", "openwith": ["nesjs"]},
+        {"ext": ".vm/.webvm", "name": "Virtual Machine file", "openwith": ["webvm", "textedit"]},
+        {"ext": ".js/.sh/.script/.jsrun", "name": "nikitOS script file", "openwith": ["jsrun", "textedit"]},
+        {"ext": "folder", "name": "Folder", "openwith": ["files"]},
+        {"ext": "*", "name": "Unknown format file", "openwith": ["textedit"]}
+    ],
+    "atob": [
+        ".json"
     ],
     "weekdays": {
         "1": "Monday",
@@ -53,7 +77,7 @@
     },
     "sysinfo": {
         "osname": "nikitOS Desktop",
-        "version": "3.0-RC",
+        "version": "3.1",
         "repo": "github.com/Nikoscocos/nikitOS"
     }
 }

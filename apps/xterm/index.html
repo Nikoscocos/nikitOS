@@ -1,0 +1,96 @@
+<contents>
+</contents>
+<onstart>
+    xterm_lib = 'apps/xterm/terminal.js';
+    twin = getWindowById(vfs.vmem.windowcounts);
+    hash = twin.hash + '_xterm';
+    welcome = 'Welcome to <a>nikitOS Terminal</a><br>Based on <a>Vanilla Terminal</a> v0.0.11';
+    cursor = '$';
+
+    user = 'nikita';
+    hostname = 'nweb';
+    path = '/';
+
+    prompt = `${user}@${hostname}:<blue>${path}</blue>`;
+
+    template = `<div id="${hash}"></div>`;
+    changeWindowContent(twin.realid, template);
+
+    const commands = {
+        ping: (instance, parameters) => {
+            instance.output(`Ping to <u>${parameters[0]}</u>...`);
+        },
+        async: (terminal) => {
+            terminal.idle();
+            setTimeout(() => terminal.output('Async 300'), 300);
+            setTimeout(() => terminal.output('Async 1300'), 1300);
+            setTimeout(() => {
+              terminal.output('Async 2000');
+              terminal.setPrompt();
+            }, 7000);
+        },
+        setname: (terminal) => {
+            terminal.prompt('Enter your name', (name) => {
+                terminal.output(`Hi ${name}! I installed the prompt.`);
+                terminal.setPrompt(`${name} `);
+            });
+        },
+        run: (instance, parameters) => {
+            startApp('apps/' + parameters[0]);
+            instance.output('');
+        },
+        apps: (terminal) => {
+            toOut = `<b>Applications list:</b>`;
+            counter = 0;
+            for (let app of vfs.applications) {
+                counter++;
+                toOut += `<br>${counter}. ${app.name} (${app.path})`;
+            }
+            terminal.output(toOut);
+        },
+        cd: (terminal, parameters) => {
+            user = 'nikita';
+            hostname = 'nweb';
+            path = parameters[0];
+            prompt = `${user}@${hostname}:<blue>${path}</blue>`;
+
+            terminal.setPrompt(prompt);
+            terminal.output('');
+        },
+        neofetch: (terminal) => {
+            ans = `
+<blue>  lllllll      </blue> OS: ${vfs.sysinfo.osname}<br>
+<blue>   ll   ll     </blue> Kernel: ${vfs.sysinfo.version}<br>
+<blue>    ll   ll    </blue> Repo: ${vfs.sysinfo.repo}<br>
+<blue>     ll   ll   </blue> Applications: ${vfs.applications.length}<br>
+<blue>  lllllllllll  </blue> Processes: ${vfs.vmem.windows.length}<br>
+                `;
+            terminal.output(ans);
+        }
+    };
+
+    if (!vfs.vmem.import.includes(xterm_lib)) {
+        fetch(xterm_lib, { method: 'GET' })
+        .then(script => script.text())
+        .then(script => {
+            eval(script);
+            vfs.vmem.import.push(xterm_lib);
+            const terminal = new VanillaTerminal({
+                commands,
+                container: hash,
+                welcome: welcome,
+                separator: cursor,
+                prompt: prompt
+            });
+        });
+    }
+    else {
+        const terminal = new VanillaTerminal({
+            commands,
+            container: hash,
+            welcome: welcome,
+            separator: cursor,
+            prompt: prompt
+        });
+    }
+</onstart>

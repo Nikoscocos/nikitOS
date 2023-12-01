@@ -1,0 +1,11 @@
+<contents>
+</contents>
+<onstart>
+    async function videoViewInit() {
+        changeWindowTitle(vfs.vmem.windowcounts, params.path);
+        image = await webfs.getMediaContent(params.path);
+        changeWindowContent(vfs.vmem.windowcounts - 1, `<div class="blackouter"><video media class="fulled" autoplay="true" controls><source src="${image}"></video></div>`);
+    }
+
+    videoViewInit();
+</onstart>

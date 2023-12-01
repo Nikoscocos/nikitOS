@@ -2,16 +2,35 @@
     <div class="nonceblank"></div>
 </contents>
 <onstart>
-    function updateProcessList(cid) {
-        appcontent = '<div class="nonceblank">';
+    async function updateProcessList(cid) {
+        alltasks = vfs.vmem.windows.length + Object.keys(vfs.vmem.kernel.threads).length + Object.keys(vfs.vmem.kernel.proc).length;
+        vmemsize = await webfs.getSize(JSON.stringify(vfs.vmem).length);
+        vmembytes = JSON.stringify(vfs.vmem).length;
+        appcontent = `<div class="nonceblank"><div class="bottom-bar">vmem: ${vmemsize} · bytes: ${vmembytes}<eq right>${alltasks} tasks</eq></div>`;
         for (let wid in vfs.vmem.windows) {
             thiswin = vfs.vmem.windows[wid];
+            if (thiswin.realid == vfs.vmem.activewindow) { sel = ' selected'; }
+            else { sel = ''; }
             appcontent = appcontent + `
-                <div class="optionchance" id="${thiswin['hash']}_${String(thiswin['realid'])}">
+                <div class="optionchance" id="${thiswin['hash']}_${String(thiswin['realid'])}"${sel}>
                     <img src="${thiswin['icon']}">
                     <div>
+                        <button right onclick="doWithWindow('${thiswin['realid']}', 'close')">Stop</button>
                         <p class="optitle">${thiswin['title']}</p>
-                        <p class="opdesc">${thiswin['author']}</p>
+                        <p class="opdesc">PID: ${thiswin['realid']} · ${thiswin['author']}</p>
+                    </div>
+                </div>
+            `;
+        }
+        for (let wid in vfs.vmem.kernel.threads) {
+            thiswin = vfs.vmem.kernel.threads[wid];
+            appcontent = appcontent + `
+                <div class="optionchance">
+                    <img src="apps/jsrun/icon.png">
+                    <div>
+                        <button right onclick="kernel.stopThread('${wid}')">Stop</button>
+                        <p class="optitle">${thiswin['name']}</p>
+                        <p class="opdesc">Thread process (${thiswin['id']}:${wid})</p>
                     </div>
                 </div>
             `;

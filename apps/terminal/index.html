@@ -6,6 +6,7 @@
         ccd = cmd.split(' ')[0];
         ftr = cmd.substr(ccd.length + 1);
         ans = undefined;
+        cache = vfs.vmem.svcache[hash];
 
         switch (ccd) {
             case 'echo':
@@ -89,6 +90,31 @@ POSY     ${thc.posY}`
             case 'eval':
                 eval(ftr);
                 break;
+            case 'fsinit':
+                webfs.webfsInit();
+                break;
+            case 'touch':
+                webfs.openFile(ftr);
+                break;
+            case 'mkdir':
+                webfs.makeDirectory(ftr);
+                break;
+            case 'ls':
+                setTimeout(() => { 
+                    webfs.getListDir(cache.path).then(res => {
+                        ans = res;
+                    })
+                }, 100);
+                break;
+            case 'cwd':
+                if (cache.path != '/') { ans = '/' + cache.path + '/'; }
+                else { ans = cache.path; }
+                break;
+            case 'cd':
+                directory = ftr;
+                if (webfs.getListDir(cache.path).dirs.find(o => o.name == ftr)) { cache.path += '/' + ftr; }
+                else { ans = 'cd: directory is not exist'; }
+                break;
             default:
                 alias = tGetAlias(cmd);
                 if (alias) { ans = tCommand(alias, hash, winid); }
@@ -115,11 +141,15 @@ POSY     ${thc.posY}`
     }
     function tInit(hash, id) {
         windowconf = getWindowById(id);
+
+        if (params) { path = params.cwd; }
+        else { path = '/'; }
+
         vfs.vmem.svcache[hash] = {
             "history": [],
             "current": 0,
             "runat": new Date(),
-            "path": ""
+            "path": path
         };
         ncon = `<textarea id="${hash}" term>Welcome to nikitOS Terminal!\nType 'help' to print list of commands.\n$ </textarea>`;
         changeWindowContent(id, ncon);

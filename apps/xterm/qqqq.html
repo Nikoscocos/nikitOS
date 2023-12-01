@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>🍦terminal</title>
+    <meta name="description" content="🍦A simple and lightweight Javascript web browser terminal">
+    <meta charset="utf-8">
+    <meta name="viewport" content="user-scalable=no, width=device-width, initial-scale=1, shrink-to-fit=no">
+    <meta name="theme-color" content="#000">
+    <link rel="icon" type="image/png" href="/favicon.png">
+    <style>
+      body {
+        margin: 0;
+        padding: 0;
+      }
+
+      #vanilla-terminal {
+        width: 100vw;
+        height: 100vh;
+      }
+    </style>
+  </head>
+  <body>
+    <div id="vanilla-terminal"></div>
+    <script src="./vanilla-terminal.js"></script>
+    <script>
+      const term = new VanillaTerminal({
+        commands: {
+          flavour: (terminal) => {
+            terminal.output('There is only one flavour for your favorite🍦and it is <b>vanilla<b>.')
+            terminal.setPrompt('@soyjavi');
+          },
+
+          async: (terminal) => {
+            terminal.idle();
+            setTimeout(() => terminal.output('Async 300'), 300);
+            setTimeout(() => terminal.output('Async 1300'), 1300);
+            setTimeout(() => {
+              terminal.output('Async 2000');
+              terminal.setPrompt();
+            }, 2000);
+          },
+        },
+
+        // welcome: 'Welcome...',
+        // prompt: 'soyjavi at <u>Macbook-Pro</u> ',
+        separator: '$',
+      });
+
+      term.onInput((command, parameters) => {
+        console.log('⚡️onInput', command, parameters);
+      });
+
+      term.prompt('Your name', (name) => {
+        term.output(`Hi ${name}!`);
+        term.setPrompt(`${name} `);
+      });
+    </script>
+  </body>
+</html>

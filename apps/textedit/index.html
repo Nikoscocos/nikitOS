@@ -1,0 +1,87 @@
+<contents>
+</contents>
+<onstart>
+    async function loadTextEdit(id, file) {
+        filename = file.name
+        webfs.getBase64(file).then(
+            async function(data) {
+                contents = atob(data.split('base64,')[1]);
+                twin = getWindowById(id);
+                changeWindowTitle(id, '*' + filename + ' - Textedit');
+                document.getElementById(twin.hash + '_textarbuf').innerHTML = contents;
+            }
+        );
+    }
+    async function handleTextInput(id) {
+        twin = getWindowById(id);
+        if (!twin.title.startsWith('*')) {
+            changeWindowTitle(id, '*' + twin.title);
+        }
+    }
+    async function checkKeyEvent(e, id) {
+        if (e.ctrlKey && e.keyCode === 83) {
+            e.preventDefault();
+            twin = getWindowById(id);
+            ncont = document.getElementById(twin.hash + '_textarbuf').value;
+            conv = 'data:application/octet-stream;base64,' + btoa(ncont);
+            cache = vfs.vmem.svcache[twin.hash + '_cache'];
+            await webfs.writeToFile(cache.path, conv, encode=false);
+            changeWindowTitle(id, cache.filename + ' - Textedit');
+        }
+        if (e.ctrlKey && e.keyCode === 79) {
+            e.preventDefault();
+            twin = getWindowById(id);
+            executeMemBlock(twin.hash, 0);
+        }
+        if (e.ctrlKey && e.keyCode === 85) {
+            e.preventDefault();
+            twin = getWindowById(id);
+            document.getElementById(twin.hash + '_uploadbtn').click();
+        }
+    }
+    async function textEditInit(path=false, wid=false) {
+        if (path) { read = await webfs.getFile(path); }
+        else { read = await webfs.getFile(params.path); }
+        try { contents = atob(read.contents.split('base64,')[1]); }
+        catch { contents = ''; }
+        changeWindowTitle(wid, read.name + ' - Textedit');
+        twin = getWindowById(wid);
+
+        hashes = [];
+        for (let a of range(2)) { hashes.push((Math.random() + 1).toString(36).substring(2)); }
+
+        vfs.vmem.svcache[twin.hash + '_memblock'] = [
+            `startApp('apps/dmn.opener', params={execute: 'textEditInit(path=path, wid=${twin.realid});', wid: ${wid}});`
+        ]
+        vfs.vmem.svcache[twin.hash + '_cache'] = {
+            path: read.path,
+            filename: read.name
+        }
+
+        changeWindowContent(wid, `
+            <div class="app-buttons">
+                <div>
+                    <div class="article" id="${hashes[0]}_btn" onclick="spawnInMenu('${hashes[0]}')">File</div>
+                    <div class="contextmenu-inapp" id="${hashes[0]}" hidden>
+                        <button onclick="executeMemBlock('${twin.hash}', 0)">Open<rsq>Ctrl+O</rsq></button>
+                        <label id="${twin.hash}_uploadbtn" for="${twin.hash}_uploadtext">Upload<rsq>Ctrl+U</rsq></label>
+                        <button>Save<rsq>Ctrl+S</rsq></button>
+                        <button>Save as<rsq>Ctrl+H</rsq></button>
+
+                        <input onchange="loadTextEdit(${twin.realid}, this.files[0]); removeInMenu()" type="file" name="${twin.hash}_uploadtext" id="${twin.hash}_uploadtext" hidden>
+                    </div>
+                </div>
+                <div>
+                    <div class="article" id="${hashes[1]}_btn" onclick="spawnInMenu('${hashes[1]}')">Help</div>
+                    <div class="contextmenu-inapp" id="${hashes[1]}" hidden>
+                        <button>About Textedit</button>
+                        <button>Exit</button>
+                    </div>
+                </div>
+            </div>
+            <textarea onkeydown="checkKeyEvent(event, ${twin.realid})" class="notepad-textarea" id="${twin.hash}_textarbuf" onclick="removeInMenu()" oninput="handleTextInput(${twin.realid})">${contents}</textarea>
+        `);
+    }
+
+    textEditInit(path=false, wid=vfs.vmem.windowcounts);
+</onstart>

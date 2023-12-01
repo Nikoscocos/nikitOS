@@ -1,0 +1,85 @@
+<!doctype html>
+<html><body>
+    <script src="libv86.js"></script>
+    <script src="/system/lib/simpleIDB.js"></script>
+    <script src="/system/lib/webfs.js"></script>
+    <script>
+        window.onload = async function() {
+            const queryString = window.location.search;
+            const urlParams = new URLSearchParams(queryString);
+            const path = urlParams.get('path');
+
+            read = await webfs.getFile(path);
+            config = JSON.parse(atob(read.contents.split('base64,')[1]));
+            
+            configure = {
+                wasm_path: "v86.wasm",
+                memory_size: config.mem * 1024 * 1024,
+                vga_memory_size: config.vmem * 1024 * 1024,
+                screen_container: document.getElementById("screen_container"),
+                bios: { url: "seabios.bin" },
+                vga_bios: { url: "vgabios.bin" },
+                autostart: true,
+            }
+
+            if (config.cdrom != 'none') {
+                cdread = await webfs.getFile(config.cdrom);
+                configure.cdrom = { url: cdread.contents }
+            }
+            if (config.hdd != 'none') {
+                hdread = await webfs.getFile(config.hdd);
+                configure.hda = { url: hdread.contents }
+            }
+            if (config.state != 'none') {
+                stread = await webfs.getFile(config.state);
+                configure.state = { url: stread.contents }
+            }
+
+            var emulator = new V86Starter(configure);
+            document.getElementById("vga").onclick = function() {
+                emulator.lock_mouse()
+            }
+        }
+    </script>
+    <style>
+        html, body {
+            height: 100%;
+        }
+        body {
+            background-color: black;
+            overflow: hidden;
+            margin: 0px;
+        }
+        canvas {
+            position: absolute;
+            top: 0px;
+            left: 0px;
+            width: 100vw;
+            height: 100vh;
+            image-rendering: auto !important;
+        }
+        .main {
+            height: 100%;
+            display: inline-block;
+            width: 100%;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+        .nogui {
+            display: flex;
+            justify-content: center;
+            font: 14px / 16px monospace !important;
+        }
+        ::selection {
+            background: rgb(168, 168, 168);
+            color: rgb(0, 0, 0);
+        }
+    </style>
+    <div class="main">
+        <div id="screen_container">
+            <div class="nogui" style="white-space: pre; font: 14px monospace;"></div>
+            <canvas id="vga" style="display: none;"></canvas>
+        </div>
+    </div>
+</body></html>

@@ -1,0 +1,13 @@
+<contents>
+</contents>
+<onstart>
+    async function webvmInit() {
+        read = await webfs.getFile(params.path, decode=false);
+        config = JSON.parse(atob(read.contents.split('base64,')[1]));
+        
+        changeWindowTitle(vfs.vmem.windowcounts - 1, config.name + ' - webVM');
+        changeWindowContent(vfs.vmem.windowcounts - 1, `<iframe class="fulled" src="apps/webvm/run.html?path=${params.path}"></iframe>`);
+    }
+
+    webvmInit();
+</onstart>

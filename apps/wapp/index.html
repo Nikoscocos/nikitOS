@@ -1,0 +1,26 @@
+<contents>
+</contents>
+<onstart>
+    async function wAppInit() {
+        read = await webfs.getFile(params.path);
+        config = JSON.parse(atob(read.contents.split('base64,')[1]));
+        changeWindowTitle(vfs.vmem.windowcounts - 1, config.name);
+        twin = getWindowById(vfs.vmem.windowcounts - 1);
+        document.getElementById(`${twin.realid}`).style.width = config.screen.width;
+        document.getElementById(`${twin.realid}`).style.height = config.screen.height;
+        twin.width = config.screen.width;
+        twin.height = config.screen.height;
+        twin.icon = config.icon;
+        twin.author = config.author;
+        document.getElementById(`taskimage${twin.realid}`).setAttribute('src', config.icon);
+        thead = document.getElementById(`header${twin.realid}`)
+
+        if ('bgcolor' in config) { thead.style.backgroundColor = config.bgcolor; }
+        if ('color' in config) { thead.style.color = config.color; }
+        if ('fullscreen' in config && config.fullscreen) { doWithWindow(twin.realid, 'fullscreen'); }
+
+        changeWindowContent(vfs.vmem.windowcounts - 1, `<iframe class="fulled" src="${config.url}"></iframe>`);
+    }
+
+    wAppInit();
+</onstart>

@@ -1,0 +1,21 @@
+<contents>
+</contents>
+<onstart>
+    async function jsRunInit() {
+        debug = false;
+        read = await webfs.getFile(params.path);
+        script = atob(read.contents.split('base64,')[1]);
+        changeWindowTitle(vfs.vmem.windowcounts - 1, params.path);
+        twin = getWindowById(vfs.vmem.windowcounts - 1);
+        
+        try {
+            eval(script);
+            if (!debug) { doWithWindow(String(twin.realid), 'close'); }
+        }
+        catch (error) { changeWindowContent(twin.realid, `<div class="blankwindow">${error}</div>`);; }
+
+        // changeWindowContent(vfs.vmem.windowcounts - 1, `<iframe class="fulled" src="${config.url}"></iframe>`);
+    }
+
+    jsRunInit();
+</onstart>

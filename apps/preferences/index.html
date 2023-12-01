@@ -1,0 +1,171 @@
+<contents>
+</contents>
+<onstart>
+    blockMap = {
+        "0": {id: "appearance", name: "Appearance"},
+        "1": {id: "display", name: "Display settings"},
+        "2": {id: "datastorage", name: "Data and storage"},
+        "3": {id: "experimental", name: "Experimental"},
+        "4": {id: "about", name: "About system"}
+    }
+
+    async function setBlockType(index, hash, frombtn=false) {
+        win = getWindowByHash(hash);
+        name = blockMap[index]['name'];
+        id = blockMap[index]['id'];
+        page = document.getElementById(hash + '_prefmain');
+
+        switch (id) {
+            case 'appearance':
+                curwallpaper = document.querySelector('.screen').style.backgroundImage.split('"')[1];
+                wallpapers = await webfs.getListDir('system/assets/wallpapers');
+                walllist = '';
+                for (let image of wallpapers.files) {
+                    data = await webfs.getMediaContent(image.path);
+                    walllist += `<img src="${data}" onclick="prefSet('wallpaper', '${hash}', params={'value': '${data}', 'path': '${image.path}'})">`;
+                }
+                template = `
+                    <p class="maintitle">${name}</p>
+                    <p class="pref_blocktitle">Desktop wallpaper</p>
+                    <div style="margin-top: 10px;">
+                        <img id="pref_wall_${hash}" class="pref_appear_wallpaper" src="${curwallpaper}">
+                        <div class="pref_appear_walllist">${walllist}</div>
+                    </div>
+                `;
+                break;
+            case 'display':
+                template = `
+                    <p class="maintitle">${name}</p>
+                `;
+                break;
+            case 'datastorage':
+                loadinfo = await kernel.getLoadInfo();
+                fsinfo = await webfs.getInfo();
+                mbytes = fsinfo.sizes.virtual.formatsize.split()[0];
+                percent = parseInt(parseInt(mbytes) / 2000 * 100);
+                template = `
+                    <p class="maintitle">${name}</p>
+                    <div>
+                        <p class="pref_blocktitle">webFS Filesystem</p>
+                        <p>${fsinfo.sizes.virtual.formatsize} · (${fsinfo.sizes.virtual.formatsize} / 2000 MB) · ${percent}% full</p>
+                        <p>${fsinfo.sizes.real.formatsize} MB · (virt / real) (${fsinfo.sizes.virtual.fullsize} / ${fsinfo.sizes.real.fullsize})</p>
+                        <p>${fsinfo.files} files · created: ${fsinfo.create}</p>
+                        <div class="pref_loadbar">
+                            <div class="pref_insidebar" style="width: ${percent}%;"></div>
+                        </div>
+                    </div>
+                    <div>
+                        <p class="pref_blocktitle">Virtual Memory (vmem)</p>
+                        <p>${loadinfo.load.vmem.size} (load) · ${loadinfo.load.vfs.size} (all) · ${loadinfo.tasks} tasks</p>
+                        <p>(vfs / vmem) (${loadinfo.load.vfs.bytes} / ${loadinfo.load.vmem.bytes})</p>
+                    </div>
+                `;
+                break;
+            case 'experimental':
+                template = `
+                    <p class="maintitle">${name}</p>
+                    <p class="pref_blocktitle">Effects</p>
+                    <select onchange="document.body.style.filter = this.value;">
+                        <option value="none">No effects</option>
+                        <option value="invert(1)">Invert colors</option>
+                        <option value="contrast(5)">High-contrast</option>
+                        <option value="grayscale(1)">Grayscale</option>
+                        <option value="hue-rotate(45deg)">Alternative colors</option>
+                        <option value="blur(1px)">Blurred</option>
+                        <option value="saturate(20)">Saturate</option>
+                        <option value="sepia(1)">Sepia</option>
+                    </select>
+                    <p class="pref_blocktitle">DPI value</p>
+                    <select onchange="document.body.style.zoom = this.value;">
+                        <option value="90%">90% (for small display)</option>
+                        <option value="100%" selected>100% (standart)</option>
+                        <option value="110%">110%</option>
+                        <option value="125%">125%</option>
+                        <option value="150%">150%</option>
+                    </select>
+                    <p class="pref_blocktitle">Rotate screen</p>
+                    <input type="range" oninput="document.body.style.rotate = this.value + 'deg';" min="0" max="360" value="0">
+                    <p class="pref_blocktitle">Debug information</p>
+                    <p>Shows all information about the active window</p>
+                    <button onclick="startApp('apps/jsrun', params={path: 'scripts/debug.js'})">Enable</button>
+                `;
+                break;
+            case 'about':
+                template = `
+                    <p class="maintitle">${name}</p>
+                    <img src="system/ico/logo.png" width="75" height="75" class="pref_rightimg">
+                    <p class="pref_blocktitle">nikitOS Desktop 3.1 Alpha</p>
+                    <p>Web-based operating system, written in JavaScript</p>
+                    <p><a target="_blank" href="https://github.com/Nikoscocos/nikitOS">https://github.com/Nikoscocos/nikitOS</a></p>
+                    <p class="pref_blocktitle">License (MIT License)</p>
+                    <textarea class="pref_textblock">
+MIT License
+
+Copyright (c) 2022 Nikita Fursenko
+
+Permission is hereby granted, free of charge, to any person obtaining a copy
+of this software and associated documentation files (the "Software"), to deal
+in the Software without restriction, including without limitation the rights
+to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+copies of the Software, and to permit persons to whom the Software is
+furnished to do so, subject to the following conditions:
+
+The above copyright notice and this permission notice shall be included in all
+copies or substantial portions of the Software.
+
+THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
+SOFTWARE.
+                    </textarea>
+                `;
+                break;
+        }
+        
+        page.innerHTML = template;
+        if (frombtn) {
+            if (!vfs.vmem.svcache['pref_btn_' + hash]) {
+                vfs.vmem.svcache['pref_btn_' + hash] = {"index": index, "frombtn": frombtn};
+                frombtn.setAttribute('active', '');
+            }
+            else {
+                vfs.vmem.svcache['pref_btn_' + hash].frombtn.removeAttribute('active');
+                vfs.vmem.svcache['pref_btn_' + hash] = {"index": index, "frombtn": frombtn}
+                frombtn.setAttribute('active', '');
+            }
+        }
+    }
+    function prefInit(winid) {
+        win = getWindowById(winid);
+        template = `
+        <div class="nonceblank" flexed>
+            <div class="pref_left">
+                <button index="0" onclick="setBlockType(this.getAttribute('index'), '${win.hash}', this)", id="prefstart_${win.hash}">Appearance</button>
+                <button index="1" onclick="setBlockType(this.getAttribute('index'), '${win.hash}', this)">Display settings</button>
+                <button index="2" onclick="setBlockType(this.getAttribute('index'), '${win.hash}', this)">Data and storage</button>
+                <button index="3" onclick="setBlockType(this.getAttribute('index'), '${win.hash}', this)">Experimental</button>
+                <button index="4" onclick="setBlockType(this.getAttribute('index'), '${win.hash}', this)">About system</button>
+            </div>
+            <div class="pref_right">
+                <div class="pref_cont" id="${win.hash}_prefmain"></div>
+            </div>
+        </div>`;
+        changeWindowContent(win.realid, template);
+        setBlockType('0', win.hash, document.getElementById('prefstart_' + win.hash));
+    }
+    function prefSetThread(func, hash) {
+        kernel.set
+    }
+    function prefSet(act, hash, params) {
+        if (act=='wallpaper') {
+            setWallpaper(params.value);
+            document.getElementById('pref_wall_' + hash).setAttribute('src', params.value);
+            localStorage.wallpaper = params.path;
+        }
+    }
+
+    prefInit(vfs.vmem.windowcounts);
+</onstart>

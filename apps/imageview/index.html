@@ -1,0 +1,25 @@
+<contents>
+</contents>
+<onstart>
+    async function imageViewInit() {
+        changeWindowTitle(vfs.vmem.windowcounts, params.path);
+        image = await webfs.getMediaContent(params.path);
+        changeWindowContent(vfs.vmem.windowcounts - 1, `<img width="auto" height="auto" src="${image}">`);
+
+        twin = getWindowById(vfs.vmem.windowcounts - 1);
+        hash = twin.hash;
+
+        vfs.vmem.svcache[hash + '_cache'] = [
+            {name: 'Set as desktop wallpaper', action: `setWallpaper('${image}'); localStorage.wallpaper = '${params.path}'`, label: false, rem: true},
+            {name: 'Exit', action: `doWithWindow('${twin.realid}', 'close')`, label: false, rem: true}
+        ];
+
+        document.getElementById('content' + twin.realid).setAttribute('oncontextmenu', `
+            event.preventDefault();
+            spawnContextMenu(event, vfs.vmem.svcache['${hash}_cache']);
+            return false;
+        `);
+    }
+    
+    imageViewInit();
+</onstart>

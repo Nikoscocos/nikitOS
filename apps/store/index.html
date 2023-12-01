@@ -1,0 +1,46 @@
+<contents>
+</contents>
+<onstart>
+    function storeInit() {
+        thiswin = getWindowById(vfs.vmem.windowcounts);
+        hash = thiswin.hash;
+        id = thiswin.realid;
+        
+        template = `
+        <div class="blackouter" searchapps>
+            <div><i class="fa-solid fa-magnifying-glass"></i></div>
+            <input placeholder="Search applications..." oninput="searchApplication('${hash}', this.value)">
+        </div>
+        <div class="blackouter" id="${hash}_applist" appslist></div>
+        `;
+
+        mainurl = '/store';
+        repos = '/store/packages.json';
+
+        fetch(repos, {
+            method: 'GET'
+        })
+        .then(res => res.json())
+        .then(res => {
+            contents = '';
+            for (let package of res.packages) {
+                contents += `
+                <div class="store_app_preview">
+                    <div class="tracktitle" onclick="">
+                        <div left class="trackartwork" bgtrans>
+                            <img src="${mainurl}/${package.icon}">
+                        </div>
+                        <p class="trackname" bolder>${package.name}</p>
+                        <p class="trackauthor">${package.desc}</p>
+                    </div>
+                </div>
+                `;
+            }
+            document.getElementById(hash + '_applist').innerHTML = contents;
+        });
+
+        changeWindowContent(id, template);
+    }
+
+    storeInit();
+</onstart>

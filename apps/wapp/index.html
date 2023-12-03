@@ -14,6 +14,7 @@
         twin.author = config.author;
         document.getElementById(`taskimage${twin.realid}`).setAttribute('src', config.icon);
         thead = document.getElementById(`header${twin.realid}`)
+        thead.querySelector('.appicon').setAttribute('src', config.icon);
 
         if ('bgcolor' in config) { thead.style.backgroundColor = config.bgcolor; }
         if ('color' in config) { thead.style.color = config.color; }

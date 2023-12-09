@@ -12,6 +12,13 @@
             }
         );
     }
+    async function saveTextChanges(hash, id) {
+        ncont = document.getElementById(hash + '_textarbuf').value;
+        conv = 'data:application/octet-stream;base64,' + btoa(ncont);
+        cache = vfs.vmem.svcache[twin.hash + '_cache'];
+        await webfs.writeToFile(cache.path, conv, encode=false);
+        changeWindowTitle(id, cache.filename + ' - Textedit');
+    }
     async function handleTextInput(id) {
         twin = getWindowById(id);
         if (!twin.title.startsWith('*')) {
@@ -22,11 +29,7 @@
         if (e.ctrlKey && e.keyCode === 83) {
             e.preventDefault();
             twin = getWindowById(id);
-            ncont = document.getElementById(twin.hash + '_textarbuf').value;
-            conv = 'data:application/octet-stream;base64,' + btoa(ncont);
-            cache = vfs.vmem.svcache[twin.hash + '_cache'];
-            await webfs.writeToFile(cache.path, conv, encode=false);
-            changeWindowTitle(id, cache.filename + ' - Textedit');
+            saveTextChanges(twin.hash, id);
         }
         if (e.ctrlKey && e.keyCode === 79) {
             e.preventDefault();
@@ -65,7 +68,7 @@
                     <div class="contextmenu-inapp" id="${hashes[0]}" hidden>
                         <button onclick="executeMemBlock('${twin.hash}', 0)">Open<rsq>Ctrl+O</rsq></button>
                         <label id="${twin.hash}_uploadbtn" for="${twin.hash}_uploadtext">Upload<rsq>Ctrl+U</rsq></label>
-                        <button>Save<rsq>Ctrl+S</rsq></button>
+                        <button onclick="saveTextChanges('${twin.hash}', ${wid}); removeInMenu()">Save<rsq>Ctrl+S</rsq></button>
                         <button>Save as<rsq>Ctrl+H</rsq></button>
 
                         <input onchange="loadTextEdit(${twin.realid}, this.files[0]); removeInMenu()" type="file" name="${twin.hash}_uploadtext" id="${twin.hash}_uploadtext" hidden>

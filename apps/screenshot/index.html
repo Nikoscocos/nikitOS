@@ -1,0 +1,39 @@
+<contents>
+    
+</contents>
+<onstart>
+    loadScript('https://html2canvas.hertzen.com/dist/html2canvas.js');
+    appsel = '';
+    for (let app of vfs.vmem.windows) {
+        appsel += `
+        <option value="${app.realid}">${app.title}</option>
+        `
+    }
+    thisww = getWindowById(vfs.vmem.windowcounts);
+    template = `
+    Choice appication for screenshot:
+    <select id="${thisww.hash}_screenshot">
+        <option value="fullscreen">Fullscreen</option>
+        ${appsel}
+    </select>
+    <div id="${thisww.hash}_screenshot_image" style="width: 100%;"></div>
+    <button right onclick="doScreenShot('${thisww.hash}_screenshot', '${thisww.realid}')" style="margin-top: 20px;">Screenshot!</button>
+    `;
+    function doScreenShot(id, wid) {
+        var optn = document.getElementById(id);
+        var thiswin = document.getElementById(wid);
+        if (optn.value == 'fullscreen') { node = document.body; thiswin.style.display = 'none'; }
+        else {
+            node = document.getElementById(optn.value);
+            doWithWindow(optn.value, 'active');
+            thiswin.style.display = 'none';
+        }
+
+        html2canvas(node).then(canvas => {
+            document.getElementById(`${id}_image`).innerHTML = '';
+            document.getElementById(`${id}_image`).appendChild(canvas);
+            thiswin.style.display = 'flex';
+        });
+    }
+    changeWindowContent(String(vfs.vmem.windowcounts), template);
+</onstart>

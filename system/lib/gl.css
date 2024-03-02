@@ -1119,9 +1119,6 @@ button:disabled {
 .pref_cont {
     max-width: 600px;
 }
-.prefbtn {
-
-}
 .pref_appear_wallpaper {
     width: 70%;
 }
@@ -1178,6 +1175,7 @@ button:disabled {
     font-family: monospace;
     font-size: 14px;
     background: #4e4e4e52;
+    resize: none;
 }
 .panic {
     width: 100%;
@@ -1284,4 +1282,52 @@ video.webcam {
     background: black;
     display: inline-block;
     color: white;
+}
+
+.pref_cont hr {
+    color: #676767;
+}
+
+::-webkit-scrollbar {
+    width: 15px;
+}
+::-webkit-scrollbar-track {
+    background-color: #333b3f;
+}
+::-webkit-scrollbar-thumb {
+    background-color: #6f767f;
+    border-radius: 20px;
+    border: 4px solid #333b3f;
+    min-height: 60px;
+}
+
+.loop_container {
+    display: flex;
+    white-space: nowrap;
+    overflow: hidden;
+    width: 100%;
+}
+.loop_container p {
+    font-size: 2.5rem;
+    font-weight: 700;
+    width: 300px;
+    text-align: center;
+    color: #ffffff17;
+}
+.loop_container.slow {
+    animation: loopText 5s infinite linear;
+}
+.loop_container.fast {
+    animation: loopText 3s infinite linear;
+}
+.loop_container.fastest {
+    animation: loopText 1s infinite linear;
+}
+@keyframes loopText {
+    from {
+        transform: translateX(-50%);
+    }
+    to {
+        transform: translateX(0);
+    }
 }

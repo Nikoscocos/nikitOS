@@ -1,0 +1,12 @@
+<contents>
+</contents>
+<onstart>
+    async function webViewInit() {
+        changeWindowTitle(vfs.vmem.windowcounts, `${params.path} - WebView`);
+        page = await webfs.getMediaContent(params.path);
+        stream = page.split('base64,')[1];
+        changeWindowContent(vfs.vmem.windowcounts - 1, `<iframe style="background-color: white;" class="fulled" src="data:text/html;base64,${stream}"></iframe>`);
+    }
+
+    webViewInit();
+</onstart>

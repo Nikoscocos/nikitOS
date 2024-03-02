@@ -18,12 +18,15 @@
         switch (id) {
             case 'appearance':
                 curwallpaper = document.querySelector('.screen').style.backgroundImage.split('"')[1];
-                wallpapers = await webfs.getListDir('system/assets/wallpapers');
                 walllist = '';
-                for (let image of wallpapers.files) {
-                    data = await webfs.getMediaContent(image.path);
-                    walllist += `<img src="${data}" onclick="prefSet('wallpaper', '${hash}', params={'value': '${data}', 'path': '${image.path}'})">`;
+                try {
+                    wallpapers = await webfs.getListDir('system/assets/wallpapers');
+                    for (let image of wallpapers.files) {
+                        data = await webfs.getMediaContent(image.path);
+                        walllist += `<img src="${data}" onclick="prefSet('wallpaper', '${hash}', params={'value': '${data}', 'path': '${image.path}'})">`;
+                    }
                 }
+                catch {}
                 template = `
                     <p class="maintitle">${name}</p>
                     <p class="pref_blocktitle">Desktop wallpaper</p>
@@ -59,6 +62,14 @@
                         <p>${loadinfo.load.vmem.size} (load) · ${loadinfo.load.vfs.size} (all) · ${loadinfo.tasks} tasks</p>
                         <p>(vfs / vmem) (${loadinfo.load.vfs.bytes} / ${loadinfo.load.vmem.bytes})</p>
                     </div>
+                    <hr>
+                    <div>
+                        <p class="pref_blocktitle">Filesystem access</p>
+                        <p>Upload or reset the filesystem</p>
+                        <p>This action will result in DATA LOSS</p>
+                        <button onclick="webfs.loadFileSystem();">Upload</button>
+                        <button onclick="SimpleIDB.resetDB(); delete localStorage.wallpaper; document.location.reload()">Reset data</button>
+                    </div>
                 `;
                 break;
             case 'experimental':
@@ -88,13 +99,16 @@
                     <p class="pref_blocktitle">Debug information</p>
                     <p>Shows all information about the active window</p>
                     <button onclick="startApp('apps/jsrun', params={path: 'scripts/debug.js'})">Enable</button>
+                    <p class="pref_blocktitle">Enable mobile mode</p>
+                    <p>The system will switch to pocket mode</p>
+                    <button onclick="loadScript('packages/mobile.js')">Enable</button>
                 `;
                 break;
             case 'about':
                 template = `
                     <p class="maintitle">${name}</p>
                     <img src="system/ico/logo.png" width="75" height="75" class="pref_rightimg">
-                    <p class="pref_blocktitle">nikitOS Desktop 3.1 Alpha</p>
+                    <p class="pref_blocktitle">${vfs.sysinfo.osname} ${vfs.sysinfo.version}</p>
                     <p>Web-based operating system, written in JavaScript</p>
                     <p><a target="_blank" href="https://github.com/Nikoscocos/nikitOS">https://github.com/Nikoscocos/nikitOS</a></p>
                     <p class="pref_blocktitle">License (MIT License)</p>

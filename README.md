@@ -11,5 +11,5 @@ Found a terrible code or have an idea for a pull request?<br>Feel free to submit
 *Let's develop this web operating system together!*
 
 ### Screenshot
-![Screenshot 2024-02-24 23 04 40](https://github.com/Nikoscocos/nikitOS/assets/77122703/f7d3b6f7-3b0a-48ca-ab3c-ae10f5a4fc0e)
+![Screenshot 2024-03-05 15 27 09](https://github.com/Nikoscocos/nikitOS/assets/77122703/8d1bfea5-9dc3-42dd-9c83-ebf88c985bf8)
 <p align="center">nikitOS 3.1 running standart applications.</p>

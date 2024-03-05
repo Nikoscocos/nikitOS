@@ -1,7 +1,9 @@
 <h1> <img src="https://raw.githubusercontent.com/Nikoscocos/nikitOS/3.1-rc/favicon.ico" alt="LiveSplit" height="45" width="45" align="top"/>&nbsp;&nbsp;nikitOS Desktop</h1>
 
-[![GitHub license](https://img.shields.io/badge/license-MIT-blue.svg)](https://raw.githubusercontent.com/LiveSplit/LiveSplit/3.1-rc/LICENSE)
 [![GitHub issues](https://img.shields.io/github/issues/Nikoscocos/nikitOS.svg)](https://github.com/Nikoscocos/nikitOS/issues)
+[![GitHub license](https://img.shields.io/badge/license-MIT-blue.svg)](https://raw.githubusercontent.com/LiveSplit/LiveSplit/3.1-rc/LICENSE)
+[![Try it!](https://img.shields.io/badge/try_it-os.fursenko.space-blue)](https://os.fursenko.space)
+[![GitHub Repo stars](https://img.shields.io/github/stars/Nikoscocos/nikitOS)](https://github.com/Nikoscocos/nikitOS)
 
 ### Web-based operating system, written in JavaScript.
 

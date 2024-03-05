@@ -1,4 +1,4 @@
-<h1> <img src="https://raw.githubusercontent.com/Nikoscocos/nikitOS/3.1-rc/favicon.ico" alt="LiveSplit" height="45" width="45" align="top"/>  nikitOS Desktop</h1>
+<h1> <img src="https://raw.githubusercontent.com/Nikoscocos/nikitOS/3.1-rc/favicon.ico" alt="LiveSplit" height="45" width="45" align="top"/>&nbsp;&nbsp;nikitOS Desktop</h1>
 
 [![GitHub license](https://img.shields.io/badge/license-MIT-blue.svg)](https://raw.githubusercontent.com/LiveSplit/LiveSplit/3.1-rc/LICENSE)
 [![GitHub issues](https://img.shields.io/github/issues/Nikoscocos/nikitOS.svg)](https://github.com/Nikoscocos/nikitOS/issues)
